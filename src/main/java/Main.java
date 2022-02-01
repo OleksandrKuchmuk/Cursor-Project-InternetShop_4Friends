@@ -4,5 +4,5 @@ public class Main {
     public static void main(String[] args) {
         new LoginMenu().show();
     }
-    // Дмитро тут нарызав лапши
+    // Дмитро тут нарізав лапши
 }
