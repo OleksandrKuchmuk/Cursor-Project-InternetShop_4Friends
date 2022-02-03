@@ -1,7 +1,6 @@
 package view.impl;
 
 
-import model.Product;
 import service.UserService;
 import view.Menu;
 
@@ -50,7 +49,7 @@ public class LoginMenu implements Menu {
         String password = scanner.nextLine();
 
         if (userService.login(login, password)) {
-            new ProductMenu().show();
+            new UserProductsMenu().show();
         } else {
             System.out.println("Wrong username/pasword");
             show();

@@ -2,8 +2,7 @@ package view.impl;
 
 import view.Menu;
 
-public class ProductMenu implements Menu {
-
+public class AdminMainMenu implements Menu {
     @Override
     public void show() {
 
@@ -11,6 +10,8 @@ public class ProductMenu implements Menu {
 
     @Override
     public void exit() {
-        new LoginMenu().show();
+
     }
+
+
 }
