@@ -6,7 +6,7 @@ import view.Menu;
 import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
-    private String[] items = {"1.Products menu", "2.My orders", "0. Exit to previous menu"};
+    private String[] items = {"1.Products menu", "2.My orders", "0. Logout"};
     private Scanner scanner;
     private ProductMenu productMenu = new ProductMenu();
 

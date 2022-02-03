@@ -56,7 +56,8 @@ public class LoginMenu implements Menu {
         System.out.println("You ere just login tu our Shop");
         //тут мало би перходити на UserService  і перевіряти чи відповідають параметри login&password
         //так думаю що на юзер сервіс має бути валідатор, який перевіряє login&password на валідність і наявність в базі
-        userMainMenu.show();
+
+        userMainMenu.show();    //тимчасово, щоб перейти в наступне меню
 
 
 //        if (userService.login(login, password)) {
@@ -81,6 +82,8 @@ public class LoginMenu implements Menu {
         System.out.println("You are just registered in our Shop");
         //тут мало би перходити на UserService  і перевіряти чи відповідають параметри login&password
         //так думаю що на юзер сервіс має бути валідатор, який перевіряє login&password на валідність і вносити в базу
+
+        userMainMenu.show(); //тимчасово, щоб перейти в наступне меню
 
 
 //        if (userService.login(login, password)) {

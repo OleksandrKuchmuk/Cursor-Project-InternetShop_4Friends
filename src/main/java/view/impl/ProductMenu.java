@@ -5,7 +5,7 @@ import view.Menu;
 import java.util.Scanner;
 
 public class ProductMenu implements Menu {
-    private String[] items = {"1.View list of products", "2.Add products to order ", "3. Make order", "0. Exit"};
+    private String[] items = {"1.Shoe product list", "2. Search product", "2.Add products to order ", "3. Confirm order", "0. Back to main menu"};
     private Scanner scanner = new Scanner(System.in);
 
 
