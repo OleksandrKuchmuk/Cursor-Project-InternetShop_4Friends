@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class UserProductsMenu implements Menu {
 
-    private String[] items = {"1.Shoe product list", "2. Search product", "2.Add products to order ", "3. Confirm order", "0. Back to main menu"};
+
+    private String[] items = {"1.Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back to main menu"};
     private Scanner scanner = new Scanner(System.in);
 
 

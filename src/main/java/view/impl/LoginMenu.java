@@ -10,7 +10,7 @@ public class LoginMenu implements Menu {
 
     private UserService userService;
     UserMainMenu userMainMenu = new UserMainMenu();
-    private String[] items = {"1.Login", "2.Register", "0. Exit"};
+    private String[] items = {"1. Login", "2. Register", "0. Exit"};
     private Scanner scanner = new Scanner(System.in);
 
     @Override
