@@ -6,9 +6,10 @@ import view.Menu;
 import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
-    private String[] items = {"1.Products menu", "2.My orders", "0. Logout"};
+    private String[] items = {"1. Products menu", "2. My orders", "0. Logout"};
     private Scanner scanner;
-    private ProductMenu productMenu = new ProductMenu();
+    private UserProductsMenu productMenu = new UserProductsMenu();
+    private UserOrdersMenu userOrdersMenu = new UserOrdersMenu();
 
     @Override
     public void show() {
@@ -25,7 +26,7 @@ public class UserMainMenu implements Menu {
                     productMenu.show();
                     break;
                 case 2:
-                    System.out.println("тут має бути епрехід до моїх замовлень");
+                    userOrdersMenu.show();
                     break;
                 case 0:
                     exit();
