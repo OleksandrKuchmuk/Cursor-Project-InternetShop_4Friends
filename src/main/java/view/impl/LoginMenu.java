@@ -1,8 +1,12 @@
 package view.impl;
 
 
-import model.Product;
+import model.User;
+import model.UserRole;
+import service.ProductService;
+import service.Response;
 import service.UserService;
+import service.impl.UserServiceImpl;
 import view.Menu;
 
 import java.util.Scanner;
@@ -10,30 +14,33 @@ import java.util.Scanner;
 public class LoginMenu implements Menu {
 
     private UserService userService;
-    private String[] items = {"1.Login", "2.Register"};
+    private String[] items = new String[]{"1.Login", "2.Register", "0.Exit"};
     private Scanner scanner;
+    public LoginMenu( UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void show() {
         showItems(items);
-        System.out.println("0. Exit");
-
         scanner = new Scanner(System.in);
-
         while (true) {
-            int choice = scanner.nextInt();
+            point:
 
-            switch (choice) {
-                case 1:
-                    loginSubMenu(scanner);
-                    break;
-                case 2:
-                    loginSubMenu(scanner);
-                    break;
-                case 0:
-                    exit();
-                    break;
+            while (true) {
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 0:
+                        exit();
+                    case 1:
+                        loginSubMenu();
+                        break;
+                    case 2:
+                        break point;
+                }
             }
+            registerSubMenu();
         }
     }
 
@@ -42,22 +49,47 @@ public class LoginMenu implements Menu {
         System.exit(0);
     }
 
-    private void loginSubMenu(Scanner scanner) {
-        System.out.println("input login:");
+    private void loginSubMenu() {
+        Response<User> userResponse;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input login: ");
         String login = scanner.nextLine();
-
-        System.out.println("input password:");
+        System.out.print("Input password: ");
         String password = scanner.nextLine();
-
-        if (userService.login(login, password)) {
-            new ProductMenu().show();
+        userResponse = userService.login(login, password);
+        if (userResponse.isSuccessful()) {
+            User user = userResponse.getValue();
+            if (user.getUserRole() == UserRole.ADMIN) {
+                System.out.println("Admin");
+            } else {
+                new UserMainMenu().show();
+            }
         } else {
-            System.out.println("Wrong username/pasword");
+            System.out.println(userResponse.getMessage());
             show();
         }
     }
 
-    private void registerSubMenu(Scanner scanner) {
-        show(); //todo add impl
+    private void registerSubMenu() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Input login: ");
+        String login = scanner.nextLine();
+        System.out.print("Input password: ");
+        String password = scanner.nextLine();
+        System.out.print("Repeat password: ");
+        String passwordRepeat = scanner.nextLine();
+        if (!passwordRepeat.equals(password)) {
+            System.out.println("Password mismatch! Try again");
+            this.registerSubMenu();
+        } else {
+            Response<User> registerResponse = this.userService.register(login, password);
+            if (registerResponse.isSuccessful()) {
+                (new UserMainMenu()).show();
+            } else {
+                System.out.println(registerResponse.getMessage());
+                this.registerSubMenu();
+            }
+        }
+
     }
 }

@@ -4,6 +4,7 @@ package view.impl;
 import view.Menu;
 
 public class UserMainMenu implements Menu {
+    LoginMenu loginMenu;
     @Override
     public void show() {
         System.out.println("AHhaaa!!");
@@ -11,6 +12,6 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
-        new LoginMenu().show();
+        this.loginMenu.show();
     }
 }
