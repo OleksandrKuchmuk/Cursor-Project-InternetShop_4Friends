@@ -5,64 +5,77 @@ import exception.UserAccessException;
 import java.util.Objects;
 
 public class User {
-    private String username;
-    private String password;
+ private String userName;
+ private String password;
     private boolean isBlocked;
     private final UserRole userRole;
 
-    public User(String username, String password, UserRole userRole) {
-        setUsername(username);
+
+    public User(String userName, String password, UserRole userRole) {
+        setUserName(userName);
         setPassword(password);
         this.userRole = userRole;
         this.isBlocked = false;
     }
 
-    public String getUsername() {
-        return username;
+ 
+      public String getUserName() {
+        return userName;
+    }  
+  
+    public void setUserName(String userName) {
+        if (userName.length() <= 20 && userName.length() >= 6) {
+            if (!userName.matches("([A-Za-z0-9])\\w+")) {
+                System.out.println("Username can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+            } else {
+                this.userName = userName;
+            }
+        } else {
+            System.out.println("User name cannot be less than 6 and more than 20");
+        }
+
     }
 
     public String getPassword() {
         return password;
     }
+  
+    public void setPassword(String password) {
+        if (password.length() <= 20 && password.length() >= 6) {
+            if (!password.matches("([A-Za-z0-9])\\w+")) {
+                System.out.println("Password can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+            } else {
+                this.password = password;
+            }
+        } else {
+            System.out.println("Password cannot be less than 6 and more than 20");
+        }
 
-    public boolean isBlocked() {
-        return isBlocked;
+    }  
+  
+     public boolean isBlocked() {
+        return this.isBlocked;
     }
 
     public UserRole getUserRole() {
-        return userRole;
-    }
+        return this.userRole;
+    }    
 
-    public void setUsername(String username) {
-        if (username.length() > 32 || username.length() < 4) {
-            throw new IllegalArgumentException("Довжина імені користувача має бути від 4 до 32 символів.");
-        }
-        if (!username.matches("([A-Za-z0-9_])\\w+")) {
-            throw new IllegalArgumentException("Ім'я користувача може містити лише літери(a-z), цифри(0-9), символ ( _ ).");
-        }
-        this.username = username;
+    public String getPassword() {
+        return password;
     }
-
-    public void setPassword(String password) {
-        if (password.length() > 32 || password.length() < 8) {
-            throw new IllegalArgumentException("Довжина пароля має бути від 8 to 32 символів.");
-        }
-        if (!password.matches("([A-Za-z0-9_])\\w+")) {
-            throw new IllegalArgumentException("Пароль може містити тільки літери(a-z), цифри(0-9), символ ( _ ).");
-        }
-        this.password = password;
-    }
+    
 
     public void block() {
         if (userRole == UserRole.ADMIN) {
             throw new UserAccessException("Администратора не можна заблокувати.");
-        }
-        isBlocked = true;
+        } else {
+            this.isBlocked = true;
+
+   public void unblock() {
+        this.isBlocked = false;
     }
 
-    public void unblock() {
-        isBlocked = false;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -87,3 +100,5 @@ public class User {
                 '}';
     }
 }
+           
+
