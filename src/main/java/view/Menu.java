@@ -7,6 +7,7 @@ public interface Menu {
 
     default void showItems(String[] items) {
         System.out.println("-------------");
+<<<<<<< HEAD
         String[] var2 = items;
         int var3 = items.length;
 
@@ -15,6 +16,12 @@ public interface Menu {
             System.out.println(item);
         }
 
+=======
+        for (String item : items) {
+
+            System.out.println(item);
+        }
+>>>>>>> main
         System.out.println("-------------");
     }
 }
