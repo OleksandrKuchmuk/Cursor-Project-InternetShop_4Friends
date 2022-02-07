@@ -1,6 +1,10 @@
 package service;
 
+<<<<<<< HEAD
 public class Response <T> {
+=======
+public class Response<T> {
+>>>>>>> main
     private final T value;
     private final boolean isSuccessful;
     private final String message;

@@ -1,50 +1,77 @@
 package model;
 
 
+
 import java.util.Objects;
 
 public class Product {
-    private String name;
-    private double price;
-    private int count;
+    private String productName;
+    private Double price;
+    private int quantity;
+
     public Product(String name, double price,int count) {
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName (String productName) {
+        if (productName == null || productName.isBlank()){
+            throw new IllegalArgumentException("Product name cann not be empty.");
+        }
+        this.productName = productName;
     }
 
     public double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
+        if (price.doubleValue() < 0) {
+            throw new IllegalArgumentException("Product price cann not be less than zero");
+        }
         this.price = price;
     }
 
-    public int getCount() {
-        return count;
+    public int getQuantity() {
+        return quantity;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setQuantity(int quantity) {
+        if (quantity < 0) {
+            throw new IllegalArgumentException("Product quantity cann not be less than zero");
+        }
+        this.quantity = quantity;
     }
+
+
+
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return name.equals(product.name);
+        return productName.equals(product.productName);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productName='" + productName + '\'' +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, count);
+        return Objects.hash(productName, price, productName);
+
+
+
     }
 }
 

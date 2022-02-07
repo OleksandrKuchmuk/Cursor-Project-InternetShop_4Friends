@@ -3,6 +3,7 @@ package dao.ProductDaoImpl;
 import dao.ProductDao;
 import model.Product;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -21,12 +22,22 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> add(Product product) {
-        return Optional.ofNullable(productMap.put(product.getName(),product));
+        return Optional.ofNullable(productMap.put(product.getProductName(),product));
+    }
+
+    @Override
+    public Optional<Product> getByName(String name) {
+        return Optional.empty();
     }
 
     @Override
     public Optional<Product> delete(String name) {
         return Optional.ofNullable(productMap.remove(name));
+    }
+
+    @Override
+    public Map<String, Product> getAllProducts()throws IOException, ClassNotFoundException {
+        return null;
     }
 
     @Override
