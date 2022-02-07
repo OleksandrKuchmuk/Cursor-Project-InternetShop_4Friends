@@ -1,7 +1,5 @@
 package model;
 
-
-
 import java.util.Objects;
 
 public class Product {
@@ -40,16 +38,12 @@ public class Product {
 
     public void setQuantity(int quantity) {
         if (quantity < 0) {
-            throw new IllegalArgumentException("Product quantity cann not be less than zero");
+    throw new IllegalArgumentException("Product quantity cann not be less than zero");
         }
         this.quantity = quantity;
     }
-
-
-
-
-
-    @Override
+    
+  @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -69,9 +63,6 @@ public class Product {
     @Override
     public int hashCode() {
         return Objects.hash(productName, price, productName);
-
-
-
     }
 }
 
