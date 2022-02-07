@@ -1,14 +1,10 @@
 package view.impl;
 
 
-
 import model.User;
 import model.UserRole;
-import service.ProductService;
 import service.Response;
-
 import service.UserService;
-import service.impl.UserServiceImpl;
 import view.Menu;
 
 import java.util.Scanner;
@@ -18,7 +14,7 @@ public class LoginMenu implements Menu {
     private UserService userService;
 
 
-    public LoginMenu( UserService userService) {
+    public LoginMenu() {
         this.userService = userService;
     }
 

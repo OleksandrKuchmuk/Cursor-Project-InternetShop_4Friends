@@ -12,7 +12,7 @@ public class AdminMainMenu implements Menu {
     private final String[] itemsOrderStatus = {};
     private final String[] itemsForEditProduct = {"1.Edit name", "2.Edit price", "3.Edit quantity", "0.Back"};
     private Scanner scanner;
-    LoginMenu loginMenu = new LoginMenu();
+    LoginMenu loginMenu ;
 
     @Override
     public void show() {
@@ -24,6 +24,9 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    exit();
+                    break;
                 case 1:
                     usersMenu();
                     break;
@@ -33,9 +36,7 @@ public class AdminMainMenu implements Menu {
                 case 3:
                     productMenu();
                     break;
-                case 0:
-                    exit();
-                    break;
+
             }
         }
     }
@@ -49,6 +50,9 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    show();
+                    break;
                 case 1:
                     System.out.print("Enter username for blocking user: ");
                     // тут має бути код для блокування юзера
@@ -57,9 +61,7 @@ public class AdminMainMenu implements Menu {
                     System.out.print("Enter username for un blocking user: ");
                     // тут має бути код для розблокування юзера
                     break;
-                case 0:
-                    show();
-                    break;
+
             }
         }
     }
@@ -73,6 +75,9 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    show();
+                    break;
                 case 1:
                     System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'підтверджений')");
                     show();
@@ -81,9 +86,7 @@ public class AdminMainMenu implements Menu {
                     System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'не підтверджений')");
                     show();
                     break;
-                case 0:
-                    show();
-                    break;
+
             }
         }
     }
@@ -97,6 +100,9 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    show();
+                    break;
                 case 1:
                     System.out.println("тут має відбутись зміна параметрів продукту (edit product) ");
 
@@ -107,9 +113,7 @@ public class AdminMainMenu implements Menu {
                 case 3:
                     System.out.println("тут має відбутись зміна параметрів продукту (Delit product) ");
                     break;
-                case 0:
-                    show();
-                    break;
+
             }
         }
     }
@@ -137,6 +141,9 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    productMenu();
+                    break;
                 case 1:
                     System.out.println("тут має відбутись зміна назви продукту");
                     break;
@@ -146,9 +153,7 @@ public class AdminMainMenu implements Menu {
                 case 3:
                     System.out.println("тут має відбутись зміна кількості продукту");
                     break;
-                case 0:
-                    productMenu();
-                    break;
+
             }
         }
     }

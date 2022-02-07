@@ -22,16 +22,15 @@ public class UserOrdersMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    userMainMenu.show();
+                    break;
                 case 1:
                     System.out.println("тут має бути перевірка чи є список замовлень або повідомлення," +
                             " що замовлень ще нема, перехід на логіку, яка поверне список або повідомлення");
                     break;
-                case 0:
-                    userMainMenu.show();
-                    break;
             }
         }
-
         }
 
 

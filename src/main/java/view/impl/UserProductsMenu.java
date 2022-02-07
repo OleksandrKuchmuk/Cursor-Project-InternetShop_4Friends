@@ -25,6 +25,9 @@ public class UserProductsMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
+                case 0:
+                    exit();
+                    break;
                 case 1:
                     System.out.println("тут має сформуватись список продуктів");
                     break;
@@ -40,9 +43,7 @@ public class UserProductsMenu implements Menu {
                     System.out.println("тут має бути функція 'зробити замовлення', можливо потім відредагується" +
                             "на зразок - 'закінчив робити замовлення'");
                     break;
-                case 0:
-                    exit();
-                    break;
+
             }
         }
 
