@@ -12,11 +12,11 @@ public class UserDaoImpl implements UserDao {
     private final Map<String, User> userMap = new TreeMap();
 
     public UserDaoImpl() {
-        this.userMap.put("admin", new User("admin", "masterpass", UserRole.ADMIN));
-        this.userMap.put("user1", new User("user1", "12345678", UserRole.USER));
+        userMap.put("admin", new User("admin", "masterpass", UserRole.ADMIN));
+        userMap.put("user1", new User("user1", "12345678", UserRole.USER));
         User blockedUser = new User("user2", "12345678", UserRole.USER);
         blockedUser.block();
-        this.userMap.put("user2", blockedUser);
+        userMap.put("user2", blockedUser);
     }
 
     public Optional<User> add(User user) {

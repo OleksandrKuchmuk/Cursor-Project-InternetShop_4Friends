@@ -51,6 +51,6 @@ public class UserProductsMenu implements Menu {
 
     @Override
     public void exit() {
-        new LoginMenu().show();
+        new UserMainMenu().show();
     }
 }

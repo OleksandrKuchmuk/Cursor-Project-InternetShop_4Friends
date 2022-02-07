@@ -15,8 +15,8 @@ public class UserServiceImpl implements UserService {
         this.userDao = new UserDaoImpl();
     }
 
-    public Response<User> login(String username, String password) {
-        Optional<User> user = userDao.getByUsername(username);
+    public Response<User> login(String userName, String password) {
+        Optional<User> user = userDao.getByUsername(userName);
         if (user.isPresent()) {
             User userObj = user.get();
             if (userObj.isBlocked()) {
@@ -26,16 +26,16 @@ public class UserServiceImpl implements UserService {
                 return new Response<>(userObj, true, userObj.toString());
             }
         }
-        return new Response<>(null, false, "Incorrect username or password");
+        return new Response<>(null, false, "Incorrect userName or password");
     }
 
     @Override
-    public Response<User> register(String username, String password) {
-        Optional<User> user = this.userDao.getByUsername(username);
+    public Response<User> register(String userName, String password) {
+        Optional<User> user = this.userDao.getByUsername(userName);
         if (user.isEmpty()) {
             User newUser;
             try {
-                newUser = new User(username, password, UserRole.USER);
+                newUser = new User(userName, password, UserRole.USER);
             } catch (IllegalArgumentException var6) {
                 return new Response( null, false, var6.getMessage());
             }

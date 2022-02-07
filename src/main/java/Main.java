@@ -1,3 +1,6 @@
+import service.impl.OrderServiceImpl;
+import service.impl.ProductServiceImpl;
+import service.impl.UserServiceImpl;
 import view.impl.LoginMenu;
 
 import java.io.IOException;
@@ -6,8 +9,8 @@ public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 //        new LoginMenu(new UserServiceImpl()).show();
 
-        new LoginMenu().show();
-//            new LoginMenu(new UserServiceImpl()).show();
+//        new LoginMenu().show();
+            new LoginMenu(new UserServiceImpl(), new OrderServiceImpl(), new ProductServiceImpl()).show();
 
 
 //        productDaoImpl.addFileWithProducts();

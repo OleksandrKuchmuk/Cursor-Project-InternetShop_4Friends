@@ -20,8 +20,20 @@ public class User {
  
       public String getUserName() {
         return userName;
-    }  
-  
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public boolean isBlocked() {
+        return this.isBlocked;
+    }
+
+    public UserRole getUserRole() {
+        return this.userRole;
+    }
+
     public void setUserName(String userName) {
         if (userName.length() <= 20 && userName.length() >= 6) {
             if (!userName.matches("([A-Za-z0-9])\\w+")) {
@@ -34,10 +46,6 @@ public class User {
         }
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         if (password.length() <= 20 && password.length() >= 6) {
             if (!password.matches("([A-Za-z0-9])\\w+")) {
@@ -48,16 +56,6 @@ public class User {
         } else {
             System.out.println("Password cannot be less than 6 and more than 20");
         }
-    }  
-  
-
-    public boolean isBlocked() {
-        return this.isBlocked;
-    }
-
-
-    public UserRole getUserRole() {
-        return this.userRole;
     }
 
 

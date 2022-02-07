@@ -7,11 +7,13 @@ import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
 
-    LoginMenu loginMenu;
+
     private String[] items = {"1. Products menu", "2. My orders", "0. Logout"};
-    private Scanner scanner;
+
     private UserProductsMenu productMenu = new UserProductsMenu();
     private UserOrdersMenu userOrdersMenu = new UserOrdersMenu();
+    LoginMenu loginMenu ;
+
 
 
     @Override
@@ -19,7 +21,7 @@ public class UserMainMenu implements Menu {
         showItems(items);
 
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
-        scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             int choice = scanner.nextInt();
@@ -42,6 +44,6 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
-        this.loginMenu.show();
+        loginMenu.show();
     }
 }
