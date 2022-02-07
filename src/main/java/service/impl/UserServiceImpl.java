@@ -1,6 +1,6 @@
 package service.impl;
 
-<<<<<<< HEAD
+
 import dao.impl.UserDaoImpl;
 import model.User;
 import model.UserRole;
@@ -46,17 +46,7 @@ public class UserServiceImpl implements UserService {
             return new Response(null, false, "User already exist");
         }
     }
-
-
 }
 
-=======
-import service.UserService;
 
-public class UserServiceImpl implements UserService {
-    @Override
-    public boolean login(String username, String password) {
-        return false;
-    }
-}
->>>>>>> main
+
