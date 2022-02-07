@@ -6,11 +6,11 @@ import view.impl.LoginMenu;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
+    public static void main(String[] args)  {
 //        new LoginMenu(new UserServiceImpl()).show();
 
 //        new LoginMenu().show();
-            new LoginMenu(new UserServiceImpl(), new OrderServiceImpl(), new ProductServiceImpl()).show();
+        new LoginMenu(new OrderServiceImpl(),new UserServiceImpl(),new ProductServiceImpl()).show();
 
 
 //        productDaoImpl.addFileWithProducts();
@@ -23,7 +23,7 @@ public class Main {
 
 
 
-
+    
 
 
     }

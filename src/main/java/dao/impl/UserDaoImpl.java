@@ -12,19 +12,19 @@ public class UserDaoImpl implements UserDao {
     private final Map<String, User> userMap = new TreeMap();
 
     public UserDaoImpl() {
-        userMap.put("admin", new User("admin", "masterpass", UserRole.ADMIN));
-        userMap.put("user1", new User("user1", "12345678", UserRole.USER));
+        this.userMap.put("admin", new User("admin", "masterpass", UserRole.ADMIN));
+        this.userMap.put("user1", new User("user1", "12345678", UserRole.USER));
         User blockedUser = new User("user2", "12345678", UserRole.USER);
         blockedUser.block();
-        userMap.put("user2", blockedUser);
+        this.userMap.put("user2", blockedUser);
     }
 
     public Optional<User> add(User user) {
-        return Optional.ofNullable((User) this.userMap.put(user.getUserName(), user));
+        return Optional.ofNullable((User)this.userMap.put(user.getUserName(), user));
     }
 
     public Optional<User> getByUsername(String username) {
-        return Optional.ofNullable((User) this.userMap.get(username));
+        return Optional.ofNullable(userMap.get(username));
     }
 
     public Optional<User> update(String username, User newUser) {
@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public Optional<User> delete(String username) {
-        return Optional.ofNullable((User) this.userMap.remove(username));
+        return Optional.ofNullable((User)this.userMap.remove(username));
     }
 
 

@@ -1,6 +1,9 @@
 package view.impl;
 
 
+import service.impl.OrderServiceImpl;
+import service.impl.ProductServiceImpl;
+import service.impl.UserServiceImpl;
 import view.Menu;
 
 import java.util.Scanner;
@@ -44,6 +47,6 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
-        loginMenu.show();
+        new LoginMenu().show();
     }
 }

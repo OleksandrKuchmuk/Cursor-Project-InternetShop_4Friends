@@ -35,27 +35,30 @@ public class User {
     }
 
     public void setUserName(String userName) {
-        if (userName.length() <= 20 && userName.length() >= 6) {
-            if (!userName.matches("([A-Za-z0-9])\\w+")) {
-                System.out.println("Username can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+
+            if (userName.length() <= 20 && userName.length() >= 6) {
+                if (!userName.matches("([A-Za-z0-9])\\w+")) {
+                    System.out.println("Username can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+                } else {
+                    this.userName = userName;
+                }
             } else {
-                this.userName = userName;
+                System.out.println("User name cannot be less than 6 and more than 20");
             }
-        } else {
-            System.out.println("User name cannot be less than 6 and more than 20");
-        }
     }
 
     public void setPassword(String password) {
-        if (password.length() <= 20 && password.length() >= 6) {
-            if (!password.matches("([A-Za-z0-9])\\w+")) {
-                System.out.println("Password can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+
+            if (password.length() <= 20 && password.length() >= 6) {
+                if (!password.matches("([A-Za-z0-9])\\w+")) {
+                    System.out.println("Password can contain only letters(a-z), numbers(0-9), symbol( _ ).");
+                } else {
+                    this.password = password;
+                }
             } else {
-                this.password = password;
+                System.out.println("Password cannot be less than 6 and more than 20");
             }
-        } else {
-            System.out.println("Password cannot be less than 6 and more than 20");
-        }
+
     }
 
 
