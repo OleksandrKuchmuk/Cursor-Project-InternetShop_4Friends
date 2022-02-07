@@ -11,16 +11,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Response<Product> getProduct(String name) {
+
         return null;
     }
 
     @Override
     public Response<Map<String, Product>> getAllProducts() {
+
         return null;
     }
 
     @Override
     public Response<Product> addProduct() {
+//        product = new Product(product.setProductName(); product.setPrice();product.setQuantity();)
         return null;
     }
 
