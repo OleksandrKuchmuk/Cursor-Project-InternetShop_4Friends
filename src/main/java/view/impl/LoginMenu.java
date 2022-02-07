@@ -10,7 +10,7 @@ public class LoginMenu implements Menu {
 
     private UserService userService;
     UserMainMenu userMainMenu = new UserMainMenu();
-    private String[] items = {"1. Login", "2. Register", "0. Exit"};
+    private String[] items = {"1.Login as user", "2.Login as admin","3. Register", "0. Exit"};
     private Scanner scanner = new Scanner(System.in);
 
     @Override
@@ -27,9 +27,14 @@ public class LoginMenu implements Menu {
 
             switch (choice) {
                 case 1:
-                    loginSubMenu();
+                    userLoginSubMenu();
                     break;
                 case 2:
+                    // перевірка введених даних, вхід в меню адміна
+                    AdminMainMenu adminMainMenu = new AdminMainMenu();
+                    adminMainMenu.show();
+                    break;
+                case 3:
                     registerSubMenu();
                     break;
                 case 0:
@@ -44,7 +49,7 @@ public class LoginMenu implements Menu {
         System.exit(0);
     }
 
-    private void loginSubMenu() {
+    private void userLoginSubMenu() {
         System.out.println("\nYou are in the login menu");
         System.out.println("Please, input your login:");
         String login = scanner.nextLine();
