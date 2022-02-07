@@ -1,14 +1,7 @@
-
-import service.UserService;
 import service.impl.UserServiceImpl;
-
-import dao.ProductDao;
-import dao.impl.ProductDaoImpl;
 import view.impl.LoginMenu;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -16,8 +9,8 @@ public class Main {
 
 //        new LoginMenu().show();
             new LoginMenu(new UserServiceImpl()).show();
-        ProductDaoImpl productDaoImpl = new ProductDaoImpl();
-        productDaoImpl.setProductMap();
+
+
 //        productDaoImpl.addFileWithProducts();
 //        productDaoImpl.;
 //        productDaoImpl.getAllProducts();
