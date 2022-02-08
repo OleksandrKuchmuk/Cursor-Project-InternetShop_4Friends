@@ -1,6 +1,7 @@
 package model;
 
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -11,14 +12,14 @@ public class Order {
     private final int id;
     private final User user;
     private final Map<Product, Integer> productMap;
-    private Double totalPrice;
+    private BigDecimal totalPrice;
     private OrderStatus orderStatus;
 
     public Order(User user) {
         this.id = ++idCounter;
         this.user = user;
         this.productMap = new HashMap<>();
-        this.totalPrice = Double.valueOf(0);
+        this.totalPrice = new BigDecimal(0);
         this.orderStatus = OrderStatus.IN_PROGRESS;
     }
 
@@ -37,17 +38,17 @@ public class Order {
         return new HashMap<>(productMap);
     }
 
-//    public void addProduct(Product product, int count) {
-//        productMap.put(product, count);
-//        totalPrice = totalPrice.add(product.getPrice().multiply(Double.valueOf(count)));
-//    }
-//
-//    public void removeProduct(Product product) {
-//        totalPrice = totalPrice.subtract(product.getPrice().multiply(new Double(productMap.get(product))));
-//        productMap.remove(product);
-//    }
+    public void addProduct(Product product, int count) {
+        productMap.put(product, count);
+        totalPrice = totalPrice.add(product.getPrice().multiply(new BigDecimal(count)));
+    }
 
-    public Double getTotalPrice() {
+    public void removeProduct(Product product) {
+        totalPrice = totalPrice.subtract(product.getPrice().multiply(new BigDecimal(productMap.get(product))));
+        productMap.remove(product);
+    }
+
+    public BigDecimal getTotalPrice() {
 
         return totalPrice;
     }

@@ -1,13 +1,14 @@
 package model;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
     private String name;
-    private Double price;
+    private BigDecimal price;
     private int quantity;
 
-    public Product(String name, Double price, int quantity) {
+    public Product(String name, BigDecimal price, int quantity) {
         setName(name);
         setPrice(price);
         setQuantity(quantity);
@@ -24,11 +25,11 @@ public class Product {
         this.name = name;
     }
 
-    public Double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(BigDecimal price) {
         if (price.doubleValue() < 0) {
             throw new IllegalArgumentException("Product price can not be less than zero.");
         }
