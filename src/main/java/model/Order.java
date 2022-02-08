@@ -12,14 +12,14 @@ public class Order {
     private final int id;
     private final User user;
     private final Map<Product, Integer> productMap;
-    private BigDecimal totalPrice;
+    private double totalPrice;
     private OrderStatus orderStatus;
 
     public Order(User user) {
         this.id = ++idCounter;
         this.user = user;
         this.productMap = new HashMap<>();
-        this.totalPrice = new BigDecimal(0);
+        this.totalPrice = 0;
         this.orderStatus = OrderStatus.IN_PROGRESS;
     }
 
@@ -39,16 +39,16 @@ public class Order {
     }
 
     public void addProduct(Product product, int count) {
-        productMap.put(product, count);
-        totalPrice = totalPrice.add(product.getPrice().multiply(new BigDecimal(count)));
+        this.productMap.put(product, count);
+        this.totalPrice = totalPrice+(product.getPrice()*count);
     }
 
     public void removeProduct(Product product) {
-        totalPrice = totalPrice.subtract(product.getPrice().multiply(new BigDecimal(productMap.get(product))));
+        totalPrice = totalPrice-(product.getPrice()*productMap.get(product));
         productMap.remove(product);
     }
 
-    public BigDecimal getTotalPrice() {
+    public double getTotalPrice() {
 
         return totalPrice;
     }

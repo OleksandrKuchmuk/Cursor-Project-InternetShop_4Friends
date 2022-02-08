@@ -5,10 +5,10 @@ import java.util.Objects;
 
 public class Product {
     private String name;
-    private BigDecimal price;
+    private double price;
     private int quantity;
 
-    public Product(String name, BigDecimal price, int quantity) {
+    public Product(String name, double price, int quantity) {
         setName(name);
         setPrice(price);
         setQuantity(quantity);
@@ -25,12 +25,13 @@ public class Product {
         this.name = name;
     }
 
-    public BigDecimal getPrice() {
+    public double getPrice() {
+
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
-        if (price.doubleValue() < 0) {
+    public void setPrice(double price) {
+        if (price < 0) {
             throw new IllegalArgumentException("Product price can not be less than zero.");
         }
         this.price = price;
