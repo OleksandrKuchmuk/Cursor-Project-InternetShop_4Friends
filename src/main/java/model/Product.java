@@ -1,6 +1,5 @@
 package model;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Product {
@@ -58,11 +57,13 @@ public class Product {
 
     @Override
     public int hashCode() {
+
         return Objects.hash(name);
     }
 
     @Override
     public String toString() {
+
         return name + " | " + price + " | " + quantity;
     }
 }

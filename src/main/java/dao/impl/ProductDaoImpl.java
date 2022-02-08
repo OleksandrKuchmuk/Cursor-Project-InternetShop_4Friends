@@ -3,8 +3,10 @@ package dao.impl;
 import dao.ProductDao;
 import model.Product;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 
 public class ProductDaoImpl implements ProductDao {
     private final Map<String, Product> productMap;
@@ -32,26 +34,29 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> add(Product product) {
-        return Optional.ofNullable(productMap.put(product.getName(),product));
+        return Optional.ofNullable(productMap.put(product.getName(), product));
     }
 
     @Override
     public Optional<Product> getByName(String name) {
+
         return Optional.empty();
     }
 
     @Override
     public Optional<Product> delete(String name) {
+
         return Optional.ofNullable(productMap.remove(name));
     }
 
     @Override
-    public Map<String, Product> getAllProducts()throws IOException, ClassNotFoundException {
+    public Map<String, Product> getAllProducts() throws IOException, ClassNotFoundException {
         return null;
     }
 
     @Override
     public Optional<Product> getListName(String name) {
+
         return Optional.ofNullable(productMap.get(name));
     }
 
@@ -66,6 +71,7 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> getListProducts(String name, double price) {
+
         return Optional.empty();
     }
 

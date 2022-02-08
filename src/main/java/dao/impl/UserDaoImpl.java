@@ -20,10 +20,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     public Optional<User> add(User user) {
-        return Optional.ofNullable((User)this.userMap.put(user.getUserName(), user));
+        return Optional.ofNullable((User) this.userMap.put(user.getUserName(), user));
     }
 
     public Optional<User> getByUsername(String username) {
+
         return Optional.ofNullable(userMap.get(username));
     }
 
@@ -37,9 +38,9 @@ public class UserDaoImpl implements UserDao {
     }
 
     public Optional<User> delete(String username) {
-        return Optional.ofNullable((User)this.userMap.remove(username));
-    }
 
+        return Optional.ofNullable((User) this.userMap.remove(username));
+    }
 
 
 }

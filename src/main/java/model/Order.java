@@ -1,7 +1,6 @@
 package model;
 
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -40,11 +39,11 @@ public class Order {
 
     public void addProduct(Product product, int count) {
         this.productMap.put(product, count);
-        this.totalPrice = totalPrice+(product.getPrice()*count);
+        this.totalPrice = totalPrice + (product.getPrice() * count);
     }
 
     public void removeProduct(Product product) {
-        totalPrice = totalPrice-(product.getPrice()*productMap.get(product));
+        totalPrice = totalPrice - (product.getPrice() * productMap.get(product));
         productMap.remove(product);
     }
 

@@ -3,14 +3,12 @@ import service.impl.ProductServiceImpl;
 import service.impl.UserServiceImpl;
 import view.impl.LoginMenu;
 
-import java.io.IOException;
-
 public class Main {
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 //        new LoginMenu(new UserServiceImpl()).show();
 
 //        new LoginMenu().show();
-        new LoginMenu(new OrderServiceImpl(),new UserServiceImpl(),new ProductServiceImpl()).show();
+        new LoginMenu(new OrderServiceImpl(), new UserServiceImpl(), new ProductServiceImpl()).show();
 
 
 //        productDaoImpl.addFileWithProducts();
@@ -20,10 +18,6 @@ public class Main {
 //        Assert.assertEquals(fileObj.hashCode(), fileObj2.hashCode());
 //        Assert.assertEquals(fileObj.toString(), fileObj2.toString());
 //        Assert.assertTrue(fileObj.equals(fileObj2));
-
-
-
-    
 
 
     }

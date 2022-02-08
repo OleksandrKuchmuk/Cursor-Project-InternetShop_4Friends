@@ -68,7 +68,7 @@ public class User {
 
     public void block() {
         if (userRole == UserRole.ADMIN) {
-            throw new UserAccessException("Администратора не можна заблокувати.");
+            throw new UserAccessException("Admin can not be blocked.");
         } else {
             this.isBlocked = true;
 
