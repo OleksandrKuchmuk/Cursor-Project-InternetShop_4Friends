@@ -11,16 +11,28 @@ public class ProductDaoImpl implements ProductDao {
 
     public ProductDaoImpl(Map<String, Product> productMap) {
         this.productMap = new TreeMap<>();
-        add(new Product("Smartphone", 4800.0, 25));
-        add(new Product("Hairdryer", 2580.0, 38));
-        add(new Product("Washing machine", 8590.0, 44));
-        add(new Product("Microwave", 5200.0, 19));
-        add(new Product("Iron", 3300.0, 35));
+        add(new Product("Aster", 10.00, 2500));
+        add(new Product("Begonia", 80.00, 1250));
+        add(new Product("Buttercup", 90.0, 3500));
+        add(new Product("Carnation", 15.0, 2500));
+        add(new Product("Chrysanthemum", 16.0, 1247));
+        add(new Product("Crocus", 11.0, 2548));
+        add(new Product("Daisy", 8.0, 5142));
+        add(new Product("Daffodil", 11.0, 2548));
+        add(new Product("Dahlia", 12.0, 480));
+        add(new Product("Forget-me-not", 2.0, 1250));
+        add(new Product("Lily", 5.0, 2555));
+        add(new Product("Orchid", 10.0, 325));
+        add(new Product("Peony", 10.0, 325));
+        add(new Product("Poppy", 7.0, 125));
+        add(new Product("Sunflower", 0.80, 125));
+        add(new Product("Tulip", 1.50, 10025));
+        add(new Product("Violet", 2.18, 682));
     }
 
     @Override
     public Optional<Product> add(Product product) {
-        return Optional.ofNullable(productMap.put(product.getProductName(),product));
+        return Optional.ofNullable(productMap.put(product.getName(),product));
     }
 
     @Override
