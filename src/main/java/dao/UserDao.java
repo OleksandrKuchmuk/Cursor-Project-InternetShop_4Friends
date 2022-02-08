@@ -4,9 +4,6 @@ import model.User;
 
 import java.util.Optional;
 
-/**
- * Created by Igor on 10/8/2019.
- */
 public interface UserDao {
     Optional<User> add(User var1);
 

@@ -18,6 +18,7 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void show() {
+        System.out.println("\nYou are in User menu");
         showItems(items);
 
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
@@ -44,6 +45,6 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
-        loginMenu.show();
+        new LoginMenu().show();
     }
 }

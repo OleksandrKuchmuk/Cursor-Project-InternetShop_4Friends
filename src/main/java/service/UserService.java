@@ -12,7 +12,11 @@ public interface UserService {
      * @param password user password
      * @return outcome of login - success or not
      */
-    Response<User> login(String username, String password);
+    Response<User> login(String var1, String var2);
 
-    Response<User> register(String username, String password);
+    Response<User> register(String var1, String var2);
+
+    Response<User> blockUser(String var1);
+
+    Response<User> unblockUser(String var1);
 }
