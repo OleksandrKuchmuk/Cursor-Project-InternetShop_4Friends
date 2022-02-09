@@ -10,6 +10,7 @@ public class UserOrdersMenu implements Menu {
 
     @Override
     public void show() {
+        System.out.println("\nYou are in user orders menu");
         showItems(items);
 
         System.out.print("\nPlease enter the number of the action point you want to perform: ");

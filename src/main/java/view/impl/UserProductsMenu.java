@@ -8,12 +8,13 @@ import java.util.Scanner;
 public class UserProductsMenu implements Menu {
 
 
-    private String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back to main menu"};
+    private String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back previous menu"};
     private Scanner scanner = new Scanner(System.in);
 
 
     @Override
     public void show() {
+        System.out.println("\nYou are in Product menu");
         showItems(items);
 
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
