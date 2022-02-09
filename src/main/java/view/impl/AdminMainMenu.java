@@ -1,7 +1,9 @@
 package view.impl;
 
+import model.User;
 import service.OrderService;
 import service.ProductService;
+import service.Response;
 import service.UserService;
 import view.Menu;
 
@@ -62,24 +64,30 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
-
-        while (true) {
-            int choice = scanner.nextInt();
-
+        int choice =scanner.nextInt();
+        scanner.nextLine();
             switch (choice) {
                 case 0:
                     show();
                     break;
-                case 1:
+                case 1: {
                     System.out.print("Enter username for blocking user: ");
-                    // тут має бути код для блокування юзера
+                    Response<User> userResponse = userService.blockUser(scanner.nextLine());
+                    System.out.println(userResponse.getMessage());
+                    usersMenu();
                     break;
-                case 2:
+                }
+                case 2: {
                     System.out.print("Enter username for un blocking user: ");
-                    // тут має бути код для розблокування юзера
+                    Response<User> userResponse = userService.unblockUser(scanner.nextLine());
+                    System.out.println(userResponse.getMessage());
+                    usersMenu();
                     break;
+
+                }
+                default:usersMenu();
             }
-        }
+
     }
 
     private void ordersMenu(){
