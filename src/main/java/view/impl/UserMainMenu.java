@@ -1,18 +1,31 @@
 package view.impl;
 
 
+import model.User;
+import service.OrderService;
+import service.ProductService;
 import view.Menu;
 
 import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
-
-
     private String[] items = {"1. Products menu", "2. My orders", "0. Logout"};
 
-    private UserProductsMenu productMenu = new UserProductsMenu();
-    private UserOrdersMenu userOrdersMenu = new UserOrdersMenu();
-    LoginMenu loginMenu ;
+    private final LoginMenu loginMenu;
+    private final OrderService orderService;
+    private final ProductService productService;
+    private final User currentuser;
+
+    public UserMainMenu(LoginMenu loginMenu, OrderService orderService, ProductService productService, User currentUser) {
+        this.loginMenu = loginMenu;
+        this.orderService = orderService;
+        this.productService = productService;
+        this.currentuser = currentUser;
+    }
+
+    //    private UserProductsMenu productMenu = new UserProductsMenu();
+//    private UserOrdersMenu userOrdersMenu = new UserOrdersMenu();
+//    LoginMenu loginMenu ;
 
 
 
@@ -20,7 +33,6 @@ public class UserMainMenu implements Menu {
     public void show() {
         System.out.println("\nYou are in User menu");
         showItems(items);
-
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         Scanner scanner = new Scanner(System.in);
 
@@ -32,10 +44,10 @@ public class UserMainMenu implements Menu {
                     exit();
                     break;
                 case 1:
-                    productMenu.show();
+                    new UserProductsMenu(this, orderService, productService).show();
                     break;
                 case 2:
-                    userOrdersMenu.show();
+                    new UserOrdersMenu(this, orderService).show();
                     break;
 
             }
@@ -45,6 +57,10 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
-        new LoginMenu().show();
+        loginMenu.show();
+    }
+
+    User getCurrentUser(){
+        return currentuser;
     }
 }

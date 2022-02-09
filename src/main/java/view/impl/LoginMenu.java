@@ -31,11 +31,12 @@ public class LoginMenu implements Menu {
 
     public void show() {
         System.out.println("\nYou are in Main menu");
-        showItems(items);
-        System.out.print("\nPlease enter the number of the action point you want to perform: ");
+
         Scanner scanner = new Scanner(System.in);
 
             while (true) {
+                showItems(items);
+                System.out.print("\nPlease enter the number of the action point you want to perform: ");
                 int choice = scanner.nextInt();
                 switch (choice) {
                     case 0:
@@ -68,9 +69,9 @@ public class LoginMenu implements Menu {
         if (userResponse.isSuccessful()) {
             User user = userResponse.getValue();
             if (user.getUserRole() == UserRole.ADMIN) {
-                (new AdminMainMenu()).show();
+                new AdminMainMenu(this, userService, orderService, productService).show();
             } else {
-                (new UserMainMenu()).show();
+                new UserMainMenu(this, orderService, productService, user).show();
             }
         } else {
             System.out.println(userResponse.getMessage());
@@ -93,7 +94,7 @@ public class LoginMenu implements Menu {
         } else {
             Response<User> registerResponse = userService.register(login, password);
             if (registerResponse.isSuccessful()) {
-                (new UserMainMenu()).show();
+                new UserMainMenu(this, orderService, productService, registerResponse.getValue()).show();
             } else {
                 System.out.println(registerResponse.getMessage());
                 registerSubMenu();

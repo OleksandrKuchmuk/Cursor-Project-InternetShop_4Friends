@@ -1,5 +1,8 @@
 package view.impl;
 
+import service.OrderService;
+import service.ProductService;
+import service.UserService;
 import view.Menu;
 
 import java.util.Scanner;
@@ -10,8 +13,21 @@ public class AdminMainMenu implements Menu {
     private final String[] itemsForOrderMenu = {"1.Confirm", "2.Un confirm", "0.Back"};
     private final String[] itemsForProductMenu = {"1.Edit product", "2.Add product", "3.Delete product", "0.Back"};
     private final String[] itemsForEditProduct = {"1.Edit name", "2.Edit price", "3.Edit quantity", "0.Back"};
+    private final LoginMenu loginMenu;
+    private final UserService userService;
+    private final OrderService orderService;
+    private final ProductService productService;
     private Scanner scanner;
-    LoginMenu loginMenu ;
+
+    public AdminMainMenu(LoginMenu loginMenu,
+                         UserService userService,
+                         OrderService orderService,
+                         ProductService productService) {
+        this.loginMenu = loginMenu;
+        this.userService = userService;
+        this.orderService = orderService;
+        this.productService = productService;
+    }
 
     @Override
     public void show() {

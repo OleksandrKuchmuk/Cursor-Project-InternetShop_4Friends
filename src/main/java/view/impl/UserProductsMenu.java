@@ -1,5 +1,7 @@
 package view.impl;
 
+import service.OrderService;
+import service.ProductService;
 import view.Menu;
 
 import java.util.Scanner;
@@ -8,21 +10,34 @@ import java.util.Scanner;
 public class UserProductsMenu implements Menu {
 
 
-    private String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back previous menu"};
-    private Scanner scanner = new Scanner(System.in);
+    private final String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back previous menu"};
+//    private Scanner scanner = new Scanner(System.in);
+    private final String[] checkoutItems = {"1.Remove product", "2.Change product count", "3.Confirm order", "0.Back"};
+
+    private final UserMainMenu userMainMenu;
+    private final OrderService orderService;
+    private final ProductService productService;
+
+    public UserProductsMenu(UserMainMenu userMainMenu,
+                            OrderService orderService,
+                            ProductService productService) {
+        this.userMainMenu = userMainMenu;
+        this.orderService = orderService;
+        this.productService = productService;
+    }
 
 
     @Override
     public void show() {
         System.out.println("\nYou are in Product menu");
-        showItems(items);
 
-        System.out.print("\nPlease enter the number of the action point you want to perform: ");
 
 
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
+            showItems(items);
+            System.out.print("\nPlease enter the number of the action point you want to perform: ");
             int choice = scanner.nextInt();
 
             switch (choice) {
@@ -52,6 +67,6 @@ public class UserProductsMenu implements Menu {
 
     @Override
     public void exit() {
-        new UserMainMenu().show();
+        userMainMenu.show();
     }
 }
