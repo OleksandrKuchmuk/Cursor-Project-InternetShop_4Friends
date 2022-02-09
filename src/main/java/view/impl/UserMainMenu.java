@@ -1,19 +1,28 @@
 package view.impl;
 
 
+import model.User;
 import view.Menu;
+import service.OrderService;
+import service.ProductService;
 
 import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
 
+    private final String[] items = {"1. Products menu", "2. My orders", "0. Logout"};
 
-    private String[] items = {"1. Products menu", "2. My orders", "0. Logout"};
+    private final LoginMenu loginMenu ;
+    private final OrderService orderService;// = new UserProductsMenu(productService, userMainMenu);
+    private final ProductService productService;// = new UserOrdersMenu();
+    private final User newUser;
 
-    private UserProductsMenu productMenu = new UserProductsMenu();
-    private UserOrdersMenu userOrdersMenu = new UserOrdersMenu();
-    LoginMenu loginMenu ;
-
+    public UserMainMenu(LoginMenu loginMenu,User newUser, OrderService orderService, ProductService productService ) {
+        this.loginMenu = loginMenu;
+        this.newUser = newUser;
+        this.orderService = orderService;
+        this.productService = productService;
+    }
 
 
     @Override
@@ -28,23 +37,19 @@ public class UserMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    exit();
-                    break;
-                case 1:
-                    productMenu.show();
-                    break;
-                case 2:
-                    userOrdersMenu.show();
-                    break;
-
+                case 0 -> exit();
+                case 1 -> new UserProductsMenu( this, productService,orderService).show();
+                case 2 -> new UserOrdersMenu(this, orderService).show();
             }
         }
-//        System.out.println("AHhaaa!!");
     }
 
     @Override
     public void exit() {
         new LoginMenu().show();
+    }
+
+    public User getNewUser() {
+        return newUser;
     }
 }

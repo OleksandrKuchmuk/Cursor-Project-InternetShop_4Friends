@@ -13,6 +13,9 @@ public class AdminMainMenu implements Menu {
     private Scanner scanner;
     LoginMenu loginMenu ;
 
+    public AdminMainMenu() {
+    }
+
     @Override
     public void show() {
         System.out.println("\nYou are in Main admins menu");
@@ -24,19 +27,10 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    exit();
-                    break;
-                case 1:
-                    usersMenu();
-                    break;
-                case 2:
-                    ordersMenu();
-                    break;
-                case 3:
-                    productMenu();
-                    break;
-
+                case 0 -> exit();
+                case 1 -> usersMenu();
+                case 2 -> ordersMenu();
+                case 3 -> productMenu();
             }
         }
     }
@@ -51,17 +45,13 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    show();
-                    break;
-                case 1:
-                    System.out.print("Enter username for blocking user: ");
-                    // тут має бути код для блокування юзера
-                    break;
-                case 2:
-                    System.out.print("Enter username for un blocking user: ");
-                    // тут має бути код для розблокування юзера
-                    break;
+                case 0 -> show();
+                case 1 -> System.out.print("Enter username for blocking user: ");
+
+                // тут має бути код для блокування юзера
+                case 2 -> System.out.print("Enter username for un blocking user: ");
+
+                // тут має бути код для розблокування юзера
             }
         }
     }
@@ -76,17 +66,15 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    show();
-                    break;
-                case 1:
+                case 0 -> show();
+                case 1 -> {
                     System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'підтверджений')");
                     show();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'не підтверджений')");
                     show();
-                    break;
+                }
             }
         }
     }
@@ -101,19 +89,10 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    show();
-                    break;
-                case 1:
-                    editProducts();
-
-                    break;
-                case 2:
-                    System.out.println("тут має відбутись зміна параметрів продукту (Add product) ");
-                    break;
-                case 3:
-                    System.out.println("тут має відбутись зміна параметрів продукту (Delit product) ");
-                    break;
+                case 0 -> show();
+                case 1 -> editProducts();
+                case 2 -> System.out.println("тут має відбутись зміна параметрів продукту (Add product) ");
+                case 3 -> System.out.println("тут має відбутись зміна параметрів продукту (Delit product) ");
             }
         }
     }
@@ -130,18 +109,10 @@ public class AdminMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    productMenu();
-                    break;
-                case 1:
-                    System.out.println("тут має відбутись зміна назви продукту");
-                    break;
-                case 2:
-                    System.out.println("тут має відбутись зміна ціни продукту");
-                    break;
-                case 3:
-                    System.out.println("тут має відбутись зміна кількості продукту");
-                    break;
+                case 0 -> productMenu();
+                case 1 -> System.out.println("тут має відбутись зміна назви продукту");
+                case 2 -> System.out.println("тут має відбутись зміна ціни продукту");
+                case 3 -> System.out.println("тут має відбутись зміна кількості продукту");
             }
         }
     }

@@ -37,24 +37,18 @@ public class LoginMenu implements Menu {
 
             while (true) {
                 int choice = scanner.nextInt();
+
                 switch (choice) {
-                    case 0:
-                        exit();
-                    case 1:
-                        loginSubMenu();
-                    case 2:
-                        registerSubMenu();
-                        break;
-                    default:
+                    case 0 -> exit();
+                    case 1 -> loginSubMenu();
+                    case 2 -> registerSubMenu();
+                    default -> {
                         System.out.println(choice + " does not exist");
                         showItems(items);
+                    }
                 }
             }
 
-    }
-
-    public void exit() {
-        System.exit(0);
     }
 
     private void loginSubMenu() {
@@ -70,7 +64,7 @@ public class LoginMenu implements Menu {
             if (user.getUserRole() == UserRole.ADMIN) {
                 (new AdminMainMenu()).show();
             } else {
-                (new UserMainMenu()).show();
+                (new UserMainMenu(this,user,orderService,productService)).show();
             }
         } else {
             System.out.println(userResponse.getMessage());
@@ -93,13 +87,17 @@ public class LoginMenu implements Menu {
         } else {
             Response<User> registerResponse = userService.register(login, password);
             if (registerResponse.isSuccessful()) {
-                (new UserMainMenu()).show();
+                (new UserMainMenu(this,registerResponse.getValue(),orderService,productService)).show();
             } else {
                 System.out.println(registerResponse.getMessage());
                 registerSubMenu();
             }
         }
 
+    }
+
+    public void exit() {
+        System.exit(0);
     }
 
 

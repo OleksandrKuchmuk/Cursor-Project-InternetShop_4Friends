@@ -12,7 +12,7 @@ public interface ProductDao {
 
     Optional<Product> getListProducts(String name,double price);
 
-    Optional<Product> add(Product product) throws IOException;
+    Optional<Product> add(Product product);
 
     Optional<Product> getByName(String name);
 
@@ -20,6 +20,6 @@ public interface ProductDao {
 
     Optional<Product> delete(String name);
 
-    Map<String, Product> getAllProducts() throws IOException, ClassNotFoundException;
+    Map<String, Product> getAllProducts() ;
 
 }

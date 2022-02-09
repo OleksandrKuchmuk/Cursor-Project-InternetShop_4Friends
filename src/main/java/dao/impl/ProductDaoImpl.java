@@ -50,7 +50,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Map<String, Product> getAllProducts() throws IOException, ClassNotFoundException {
+    public Map<String, Product> getAllProducts()  {
         return null;
     }
 
