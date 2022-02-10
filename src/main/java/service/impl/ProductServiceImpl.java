@@ -14,7 +14,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductDao productDao;
 
     public ProductServiceImpl() {
-        this.productDao = new ProductDaoImpl();
+        productDao = new ProductDaoImpl();
     }
 
     @Override

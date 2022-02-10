@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
     }
 
     public Response<User> unblockUser(String username) {
-        Optional<User> user = this.userDao.getByUsername(username);
+        Optional<User> user = userDao.getByUsername(username);
         if (user.isPresent()) {
             User userToBlock = user.get();
             userToBlock.unblock();

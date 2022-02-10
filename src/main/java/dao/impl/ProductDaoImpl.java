@@ -9,10 +9,10 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 public class ProductDaoImpl implements ProductDao {
-    private final Map<String, Product> productMap;
+    private final Map<String, Product> productMap=new TreeMap<>();
 
     public ProductDaoImpl() {
-        this.productMap = new TreeMap<>();
+       // this.productMap = new TreeMap<>();
         add(new Product("Aster", 10.00, 2500));
         add(new Product("Begonia", 80.00, 1250));
         add(new Product("Buttercup", 90.0, 3500));
@@ -50,8 +50,8 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Map<String, Product> getAllProducts() throws IOException, ClassNotFoundException {
-        return null;
+    public Map<String, Product> getAllProducts()  {
+        return new TreeMap<>(productMap);
     }
 
     @Override

@@ -40,19 +40,11 @@ public class UserMainMenu implements Menu {
             int choice = scanner.nextInt();
 
             switch (choice) {
-                case 0:
-                    exit();
-                    break;
-                case 1:
-                    new UserProductsMenu(this, orderService, productService).show();
-                    break;
-                case 2:
-                    new UserOrdersMenu(this, orderService).show();
-                    break;
-
+                case 0 -> exit();
+                case 1 -> new UserProductsMenu(this, orderService, productService).show();
+                case 2 -> new UserOrdersMenu(this, orderService).show();
             }
         }
-//        System.out.println("AHhaaa!!");
     }
 
     @Override

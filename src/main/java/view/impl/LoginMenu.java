@@ -24,11 +24,6 @@ public class LoginMenu implements Menu {
         this.productService = productService;
     }
 
-    public LoginMenu() {
-
-    }
-
-
     public void show() {
         System.out.println("\nYou are in Main menu");
 

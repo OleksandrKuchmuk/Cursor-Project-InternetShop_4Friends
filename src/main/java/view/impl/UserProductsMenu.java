@@ -1,9 +1,16 @@
 package view.impl;
 
+import model.Product;
 import service.OrderService;
 import service.ProductService;
+import service.Response;
 import view.Menu;
 
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -45,7 +52,7 @@ public class UserProductsMenu implements Menu {
                     exit();
                     break;
                 case 1:
-                    System.out.println("тут має сформуватись список продуктів");
+                    listOfProduct();
                     break;
                 case 2:
                     System.out.println("тут має включитись сканер і дати ввести назву продукту," +
@@ -63,6 +70,27 @@ public class UserProductsMenu implements Menu {
             }
         }
 
+    }
+    public void listOfProduct() {
+        Response<Map<String, Product>> allProductsMapResponse = null;
+        try {
+            allProductsMapResponse = productService.getAllProducts();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert allProductsMapResponse != null;
+        if (!allProductsMapResponse.isSuccessful()) {
+            System.out.println(allProductsMapResponse.getMessage());
+        } else {
+            Map allProductsMap = allProductsMapResponse.getValue();
+            System.out.println("Product list:");
+            System.out.println("-".repeat(20));
+            Collection var10000 = allProductsMap.values();
+            PrintStream var10001 = System.out;
+            Objects.requireNonNull(var10001);
+            var10000.forEach(var10001::println);
+            System.out.println("-".repeat(50));
+        }
     }
 
     @Override
