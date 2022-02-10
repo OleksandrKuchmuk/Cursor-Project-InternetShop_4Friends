@@ -1,17 +1,21 @@
 package view.impl;
 
+import model.Order;
+import model.OrderStatus;
+import model.Product;
 import service.OrderService;
 import service.ProductService;
+import service.Response;
 import view.Menu;
 
-import java.util.Scanner;
+import java.io.IOException;
+import java.util.*;
 
 
 public class UserProductsMenu implements Menu {
 
 
     private final String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back previous menu"};
-//    private Scanner scanner = new Scanner(System.in);
     private final String[] checkoutItems = {"1.Remove product", "2.Change product count", "3.Confirm order", "0.Back"};
 
     private final UserMainMenu userMainMenu;
@@ -30,39 +34,188 @@ public class UserProductsMenu implements Menu {
     @Override
     public void show() {
         System.out.println("\nYou are in Product menu");
-
-
-
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
             int choice = scanner.nextInt();
-
             switch (choice) {
-                case 0:
-                    exit();
-                    break;
-                case 1:
-                    System.out.println("тут має сформуватись список продуктів");
-                    break;
-                case 2:
-                    System.out.println("тут має включитись сканер і дати ввести назву продукту," +
-                            "після скану перевірка в списку, якщо такого продукту нема - 'такого продукту нема в списку'");
-                    break;
-                case 3:
-                    System.out.println("тут має перейти до списку продуктів, вибору кількості і" +
-                            " додавання продуктів в замовлення");
-                    break;
-                case 4:
-                    System.out.println("тут має бути функція 'зробити замовлення', можливо потім відредагується" +
-                            "на зразок - 'закінчив робити замовлення'");
-                    break;
-
+                case 0: exit();
+                case 1: showProductList();
+                case 2: searchProduct(scanner);
+                case 3: addProductToOrder(scanner);
+                case 4: orderCheckout(scanner);
             }
         }
+    }
 
+    private void showProductList(){
+        Response<Map<String, Product>> allProductsMapResponse = null;
+        try {
+            allProductsMapResponse = productService.getAllProducts();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (!allProductsMapResponse.isSuccessful()){
+            System.out.println(allProductsMapResponse.getMessage());
+            return;
+        }
+        Map<String, Product> allProductsMap = allProductsMapResponse.getValue();
+        System.out.println("Product list:");
+        System.out.println("-".repeat(50));
+        allProductsMap.values().forEach(System.out::println);
+        System.out.println("-".repeat(50));
+    }
+
+    private void searchProduct(Scanner scanner) {
+        List<Product> findProductList = new ArrayList<>();
+        System.out.println("Enter product name for search:");
+        String productName = scanner.nextLine();
+        Response<Map<String, Product>> allProductsResponse = null;
+        try {
+            allProductsResponse = productService.getAllProducts();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (allProductsResponse.isSuccessful()) {
+            Collection<Product> productCollection = allProductsResponse.getValue().values();
+            for (Product product : productCollection) {
+                if (product.getName().toLowerCase(Locale.ROOT).contains(productName.toLowerCase(Locale.ROOT))) {
+                    findProductList.add(product);
+                }
+            }
+        }
+        if (findProductList.isEmpty()){
+            System.out.println("Product does nit exist");
+        } else {
+            findProductList.forEach(System.out::println);
+        }
+    }
+
+    private void addProductToOrder(Scanner scanner){
+        Response<Map<Integer, Order>> ordersByUsersResponse = orderService.getOrdersByUser(userMainMenu.getCurrentUser());
+        Collection<Order> orderCollection = ordersByUsersResponse.getValue().values();
+        int orderId = orderCollection.stream()
+                .filter(order -> order.getOrderStatus() == OrderStatus.IN_PROGRESS)
+                .findFirst()
+                .orElseGet(() -> orderService.addOrder(new Order(userMainMenu.getCurrentUser())).getValue())
+                .getId();
+        while (true) {
+            showProductList();
+            System.out.println("Enter product name: ");
+            String productName = scanner.nextLine();
+            Response<Product> productResponse = productService.getProduct(productName);
+            if(!productResponse.isSuccessful()){
+                System.out.println(productResponse.getMessage());
+                continue;
+            }
+            Product product = productResponse.getValue();
+            System.out.println("Enter quantity for '" + product.getName() +"' : ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
+            Response<Order> addProductResponse = orderService
+                    .addProductToOrder(orderId, productResponse.getValue(), quantity);
+            System.out.println(addProductResponse.getMessage());
+            if (addProductResponse.isSuccessful()){
+                break;
+            }
+        }
+    }
+
+    private void orderCheckout(Scanner scanner){
+        Response<Map<Integer, Order>> orderByUsersResponse = orderService.getOrdersByUser(userMainMenu.getCurrentUser());
+        Collection<Order> orderCollection = orderByUsersResponse.getValue().values();
+        Optional<Order> inProgressOptional = orderCollection.stream()
+                .filter(order -> order.getOrderStatus() == OrderStatus.IN_PROGRESS)
+                .findFirst();
+        if (inProgressOptional.isEmpty()) {
+            System.out.println("You have no active orders. New order creates in 'Add product to order'");
+            return;
+        }
+        Order order = inProgressOptional.get();
+        if (order.getProductMap().isEmpty()) {
+            System.out.println("Your order is empty");
+            return;
+        }
+        while (true) {
+            System.out.println(order);
+            showItems(checkoutItems);
+            int choise = scanner.nextInt();
+            scanner.nextLine();
+            switch (choise){
+                case 0:show();
+                case 1: {
+                    while (true) {
+                        List<Product> productList = new ArrayList<>(order.getProductMap().keySet());
+                        for (int i=0; i < productList.size(); i++){
+                            System.out.println((i+1) + "." + productList.get(i));
+                        }
+                        System.out.println("Choose product number to remove: ");
+                        int productNumber = scanner.nextInt();
+                        scanner.nextLine();
+                        Product productToRemove;
+                        try {
+                            productToRemove = productList.get(productNumber - 1);
+                        } catch (IndexOutOfBoundsException exception) {
+                            System.out.println("Incorrect product number");
+                            continue;
+                        }
+                        Response<Order> orderResponse = orderService.removeProductFormOrder(order.getId(), productToRemove);
+                        System.out.println(orderResponse.getMessage());
+                        if (orderResponse.isSuccessful()){
+                            order = orderResponse.getValue();
+                        }
+                        break;
+                    }
+                }
+
+                case 2:{
+                    while (true){
+                        Map<Product, Integer> productMap = order.getProductMap();
+                        List<Product> productList = new ArrayList<>(productMap.keySet());
+                        int counter = 0;
+                        for (Map.Entry<Product, Integer> productCountEntry : productMap.entrySet()) {
+                            System.out.println(++counter + "."+ productCountEntry.getKey() +
+                                    " - " + productCountEntry.getValue());
+                        }
+                        System.out.println("Choose product number for change count: ");
+                        int productNumber = scanner.nextInt();
+                        scanner.nextLine();
+                        Product productToChangeCount;
+                        try {
+                            productToChangeCount = productList.get(productNumber - 1);
+                        }catch (IndexOutOfBoundsException exception) {
+                            System.out.println("Incorrect product Number");
+                            continue;
+                        }
+                        System.out.println("Enter new quantity: ");
+                        int quantity = scanner.nextInt();
+                        scanner.nextLine();
+                        Response<Order> orderResponse =
+                                orderService.addProductToOrder(order.getId(), productToChangeCount, quantity);
+                        System.out.println(orderResponse.getMessage());
+                        if (orderResponse.isSuccessful()) {
+                            order = orderResponse.getValue();
+                        }
+                        break;
+                    }
+                }
+
+                case 3: {
+                    Response<Order> changeOrderStatusResponse =
+                            orderService.changeOrderStatus(order.getId(), OrderStatus.AWAITING_CONFIRMATION);
+                    System.out.println(changeOrderStatusResponse.getMessage());
+                    if (changeOrderStatusResponse.isSuccessful()) {
+                        order = changeOrderStatusResponse.getValue();
+                        show();
+                    }
+                }
+            }
+        }
     }
 
     @Override
