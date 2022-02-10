@@ -34,14 +34,12 @@ public class UserProductsMenu implements Menu {
     public void show() {
         System.out.println("\nYou are in Product menu");
         showItems(items);
-
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
-
-
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
             int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
 
@@ -69,6 +67,7 @@ public class UserProductsMenu implements Menu {
         productMap.values().forEach(System.out::println);
         System.out.println("-------------------------------------");
     }
+
     private void searchProduct() {
 
     }

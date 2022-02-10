@@ -22,9 +22,9 @@ public class AdminMainMenu implements Menu {
         showItems(items);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
          scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
         while (true) {
-            int choice = scanner.nextInt();
 
             switch (choice) {
                 case 0 -> exit();
@@ -40,9 +40,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
         while (true) {
-            int choice = scanner.nextInt();
 
             switch (choice) {
                 case 0 -> show();
@@ -61,9 +61,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForOrderMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
         while (true) {
-            int choice = scanner.nextInt();
 
             switch (choice) {
                 case 0 -> show();
@@ -84,9 +84,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForProductMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
         while (true) {
-            int choice = scanner.nextInt();
 
             switch (choice) {
                 case 0 -> show();
@@ -104,9 +104,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForEditProduct);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
+        int choice = scanner.nextInt();
 
         while (true) {
-            int choice = scanner.nextInt();
 
             switch (choice) {
                 case 0 -> productMenu();
