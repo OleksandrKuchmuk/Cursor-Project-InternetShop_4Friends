@@ -1,5 +1,9 @@
 package view.impl;
 
+
+import model.Order;
+import model.OrderStatus;
+import model.Product;
 import exception.MenuCorrectWater;
 import model.User;
 import service.OrderService;
@@ -8,14 +12,20 @@ import service.Response;
 import service.UserService;
 import view.Menu;
 
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AdminMainMenu implements Menu {
-    private final String[] items = {"1.Users menu", "2.Order menu", "3.Product menu", "0.Exit"};
+    private final String[] items = {"1.Users menu", "2.Order menu", "3.Product menu", "0.Back to Main menu"};
     private final String[] itemsForUserMenu = {"1.Block user", "2.Unblock user", "0.Back"};
-    private final String[] itemsForOrderMenu = {"1.Confirm", "2.Un confirm", "0.Back"};
+    private final String[] itemsForOrderMenu = {"1.Change orders status", "0.Back"};
     private final String[] itemsForProductMenu = {"1.Edit product", "2.Add product", "3.Delete product", "0.Back"};
+    private final String[] itemsOrderStatus = {"1.Confirm", "2.Un confirm"};
     private final String[] itemsForEditProduct = {"1.Edit name", "2.Edit price", "3.Edit quantity", "0.Back"};
+
     private final LoginMenu loginMenu;
     private final UserService userService;
     private final OrderService orderService;
@@ -37,7 +47,7 @@ public class AdminMainMenu implements Menu {
         System.out.println("\nYou are in Main admins menu");
         showItems(items);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
-         scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
 
         while (true) {
    //         int choice = scanner.nextInt();
@@ -56,127 +66,228 @@ public class AdminMainMenu implements Menu {
                 case 3:
                     productMenu();
                     break;
-
             }
         }
     }
 
-    private void usersMenu(){
+    private void usersMenu() {
         System.out.println("\nYou are in Admin menu: Users menu");
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
-        //int choice =scanner.nextInt();
-        int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
-        //scanner.nextLine();
-            switch (choice) {
-                case 0:
-                    show();
-                    break;
-                case 1: {
-                    System.out.print("Enter username for blocking user: ");
-                    Response<User> userResponse = userService.blockUser(scanner.nextLine());
-                    System.out.println(userResponse.getMessage());
-                    usersMenu();
-                    break;
-                }
-                case 2: {
-                    System.out.print("Enter username for un blocking user: ");
-                    Response<User> userResponse = userService.unblockUser(scanner.nextLine());
-                    System.out.println(userResponse.getMessage());
-                    usersMenu();
-                    break;
 
-                }
-                default:usersMenu();
+        int choice = scanner.nextInt();
+//        int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
+        scanner.nextLine();
+        switch (choice) {
+            case 0:
+                show();
+                break;
+            case 1: {
+                System.out.print("Enter username for blocking user: ");
+                Response<User> userResponse = userService.blockUser(scanner.nextLine());
+                System.out.println(userResponse.getMessage());
+                usersMenu();
+                break;
+
             }
+            case 2: {
+                System.out.print("Enter username for un blocking user: ");
+                Response<User> userResponse = userService.unblockUser(scanner.nextLine());
+                System.out.println(userResponse.getMessage());
+                usersMenu();
+                break;
+
+            }
+            default:
+                usersMenu();
+        }
 
     }
 
-    private void ordersMenu(){
+    private void ordersMenu() {
         System.out.println("\nYou are in Admin menu: Orders menu");
         showItems(itemsForOrderMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
 
-        while (true) {
-        //    int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
-            switch (choice) {
-                case 0:
-                    show();
+
+        int choice = scanner.nextInt();
+//            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
+        scanner.nextLine();
+        switch (choice) {
+            case 1: {
+                while (true) {
+                    Response<Map<Integer, Order>> orderMapResponse =
+                            orderService.getOrdersByOrderStatus(OrderStatus.AWAITING_CONFIRMATION);
+                    if (!orderMapResponse.isSuccessful()) {
+                        System.out.println(orderMapResponse.getMessage());
+                        break;
+                    }
+                    Map<Integer, Order> orderMap = orderMapResponse.getValue();
+                    orderMap.values().forEach(System.out::println);
+                    Response<Order> orderStatusResponse;
+                    while (true) {
+                        System.out.print("Choose order id to change: ");
+                        int orderId = scanner.nextInt();
+                        scanner.nextLine();
+                        Order order = orderMap.get(orderId);
+                        if (order == null) {
+                            System.out.println("Order '" + orderId + "' does not exist");
+                            continue;
+                        }
+                        OrderStatus newStatus;
+                        while (true) {
+                            showItems(itemsOrderStatus);
+                            System.out.print("Choose status for order: ");
+                            int orderStatusIndex = scanner.nextInt();
+                            scanner.nextLine();
+                            if (orderStatusIndex == 1) {
+                                newStatus = OrderStatus.CONFIRMED;
+                            } else if (orderStatusIndex == 2) {
+                                newStatus = OrderStatus.UNCONFIRMED;
+                            } else {
+                                System.out.println("Wrong status number");
+                                continue;
+                            }
+                            break;
+                        }
+                        orderStatusResponse = orderService.changeOrderStatus(orderId, newStatus);
+                        System.out.println(orderStatusResponse.getMessage());
+                        if (orderStatusResponse.isSuccessful()) {
+                            break;
+                        }
+                    }
+
                     break;
-                case 1:
-                    System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'підтверджений')");
-                    show();
-                    break;
-                case 2:
-                    System.out.println("тут має відбутись підтвердження замовлення(зміна статусу на 'не підтверджений')");
-                    show();
-                    break;
+                }
+                ordersMenu();
             }
+            case 0:
+                show();
+            default:
+                ordersMenu();
         }
     }
 
-    private void productMenu(){
-        System.out.println("\nYou are in Admin menu: Products menu");
+    private void productMenu() {
+        System.out.println("\nYou are in Admin menu: Product menu");
+        System.out.println("-".repeat(50));
+        Collection<Product> productCollection = null;
+        try {
+            productCollection = productService.getAllProducts().getValue().values();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        productCollection.forEach(System.out::println);
+        System.out.println("-".repeat(50));
+        System.out.print("\nPlease enter the number of the action point you want to perform: ");
         showItems(itemsForProductMenu);
-        System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
 
-        while (true) {
-        //    int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
-            switch (choice) {
-                case 0:
-                    show();
-                    break;
-                case 1:
-                    editProducts();
+        int choice = scanner.nextInt();
+//        int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
+        scanner.nextLine();
+        switch (choice) {
+            case 0:
+                show();
+            case 1: {
+                System.out.println("-".repeat(50));
+                productCollection.forEach(System.out::println);
+                System.out.println("-".repeat(50));
+                System.out.print("Enter product name for edit: ");
+                String productName = scanner.nextLine();
+                Response<Product> productResponse = productService.getProduct(productName);
+                if (!productResponse.isSuccessful()) {
+                    System.out.println(productResponse.getMessage());
 
-                    break;
-                case 2:
-                    System.out.println("тут має відбутись зміна параметрів продукту (Add product) ");
-                    break;
-                case 3:
-                    System.out.println("тут має відбутись зміна параметрів продукту (Delit product) ");
-                    break;
-            }
-        }
-    }
-
-
-
-    private void editProducts(){
-        System.out.println("\nYou are in Admin menu: Edit Product");
-        showItems(itemsForEditProduct);
-        System.out.print("\nPlease enter the number of the action point you want to perform: ");
-        scanner = new Scanner(System.in);
-
-        while (true) {
-      //      int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
-            switch (choice) {
-                case 0:
                     productMenu();
-                    break;
-                case 1:
-                    System.out.println("тут має відбутись зміна назви продукту");
-                    break;
-                case 2:
-                    System.out.println("тут має відбутись зміна ціни продукту");
-                    break;
-                case 3:
-                    System.out.println("тут має відбутись зміна кількості продукту");
-                    break;
+                }
+                //noinspection InfiniteLoopStatement
+                while (true) {
+                    System.out.println("-".repeat(50));
+                    System.out.println(productResponse.getValue());
+                    System.out.println("-".repeat(50));
+                    showItems(itemsForEditProduct);
+                    int chosenItem = scanner.nextInt();
+                    scanner.nextLine();
+                    Response<Product> changeProductResponse;
+                    switch (chosenItem) {
+                        case 1: {
+                            System.out.print("Enter new product name: ");
+                            String newProductName = scanner.nextLine();
+                            changeProductResponse = productService.changeProductName(productName, newProductName);
+                            System.out.println(changeProductResponse.getMessage());
+                        }
+                        case 2: {
+                            System.out.print("Enter new product price: ");
+                            String newProductPrice = scanner.nextLine();
+                            changeProductResponse = productService.changeProductPrice(productName, Double.parseDouble(newProductPrice));
+                            System.out.println(changeProductResponse.getMessage());
+                        }
+                        case 3: {
+                            System.out.print("Enter new product quantity: ");
+                            int newProductQuantity = scanner.nextInt();
+                            scanner.nextLine();
+                            changeProductResponse = productService.changeProductQuantity(productName, newProductQuantity);
+                            System.out.println(changeProductResponse.getMessage());
+                        }
+                        case 0:
+                            productMenu();
+                    }
+                }
+            }
+            case 2: { editProduct(); }
+            case 3: { deleteProduct(productCollection); }
+            default: productMenu();
+        }
+    }
+
+
+    private void editProduct() {
+
+        while (true) {
+            System.out.print("Enter new product name: ");
+            String name = scanner.nextLine();
+            System.out.print("Enter product price: ");
+            int price = scanner.nextInt();
+            System.out.print("Enter product quantity: ");
+            int quantity = scanner.nextInt();
+            scanner.nextLine();
+            try {
+                Product newProduct = new Product(name, price, quantity);
+                Response<Product> productResponse = null;
+                try {
+                    productResponse = productService.addProduct(newProduct);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(productResponse.getMessage());
+                productMenu();
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
 
+    private void deleteProduct(Collection<Product> productCollection) {
+        while (true) {
+            System.out.println("-".repeat(50));
+            productCollection.forEach(System.out::println);
+            System.out.println("-".repeat(50));
+            System.out.print("Enter product name for delete: ");
+            Response<Product> productDeleteResponse = productService.deleteProduct(scanner.nextLine());
+            System.out.println(productDeleteResponse.getMessage());
+            productMenu();
+        }
+    }
 
 
     @Override
     public void exit() {
-        System.exit(0);
+        loginMenu.show();
     }
 }
+
