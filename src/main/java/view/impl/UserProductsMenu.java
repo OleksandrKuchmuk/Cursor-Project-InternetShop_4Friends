@@ -171,8 +171,9 @@ public class UserProductsMenu implements Menu {
         while (true) {
             System.out.println(order);
             showItems(checkoutItems);
-            int choise = scanner.nextInt();
-            scanner.nextLine();
+            int choise = MenuCorrectWater.menuCorrectWater(3);
+            //int choise = scanner.nextInt();
+            //scanner.nextLine();
             switch (choise){
                 case 0:show();
                 case 1: {
@@ -268,6 +269,7 @@ public class UserProductsMenu implements Menu {
 
     @Override
     public void exit() {
+
         userMainMenu.show();
     }
 }
