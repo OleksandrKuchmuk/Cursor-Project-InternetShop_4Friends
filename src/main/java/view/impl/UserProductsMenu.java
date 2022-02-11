@@ -47,8 +47,8 @@ public class UserProductsMenu implements Menu {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
 
-//            int choice = MenuCorrectWater.menuCorrectWater(4); // перевірка ведення
-            int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(4);
+//            int choice = scanner.nextInt();
             switch (choice) {
                 case 0: exit();
                 case 1: showProductList();
@@ -81,8 +81,17 @@ public class UserProductsMenu implements Menu {
 
     private void searchProduct(Scanner scanner) {
         List<Product> findProductList = new ArrayList<>();
+        System.out.println("Exit - 0");
         System.out.println("Enter product name for search:");
         String productName = scanner.nextLine();
+
+        try {
+            int exit = Integer.parseInt(productName);
+            if (exit == 0) {
+                show();
+            }
+        }catch (NumberFormatException e){};
+
         Response<Map<String, Product>> allProductsResponse = null;
         try {
             allProductsResponse = productService.getAllProducts();
@@ -116,8 +125,16 @@ public class UserProductsMenu implements Menu {
                 .getId();
         while (true) {
             showProductList();
+            System.out.println("Exit - 0");
             System.out.println("Enter product name: ");
             String productName = scanner.nextLine();
+            try {
+                int exit = Integer.parseInt(productName);
+                if (exit == 0) {
+                    show();
+                }
+            }catch (NumberFormatException e){};
+
             Response<Product> productResponse = productService.getProduct(productName);
             if(!productResponse.isSuccessful()){
                 System.out.println(productResponse.getMessage());
