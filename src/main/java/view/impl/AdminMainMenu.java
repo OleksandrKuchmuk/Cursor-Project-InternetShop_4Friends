@@ -1,8 +1,10 @@
 package view.impl;
 
+
 import model.Order;
 import model.OrderStatus;
 import model.Product;
+import exception.MenuCorrectWater;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -48,7 +50,8 @@ public class AdminMainMenu implements Menu {
         scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
+   //         int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
 
             switch (choice) {
                 case 0:
@@ -72,7 +75,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
+
         int choice = scanner.nextInt();
+//        int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
         scanner.nextLine();
         switch (choice) {
             case 0:
@@ -84,6 +89,7 @@ public class AdminMainMenu implements Menu {
                 System.out.println(userResponse.getMessage());
                 usersMenu();
                 break;
+
             }
             case 2: {
                 System.out.print("Enter username for un blocking user: ");
@@ -105,8 +111,9 @@ public class AdminMainMenu implements Menu {
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
 
-        int choice = scanner.nextInt();
 
+        int choice = scanner.nextInt();
+//            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
         scanner.nextLine();
         switch (choice) {
             case 1: {
@@ -151,6 +158,7 @@ public class AdminMainMenu implements Menu {
                             break;
                         }
                     }
+
                     break;
                 }
                 ordersMenu();
@@ -178,7 +186,9 @@ public class AdminMainMenu implements Menu {
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         showItems(itemsForProductMenu);
         scanner = new Scanner(System.in);
+
         int choice = scanner.nextInt();
+//        int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
         scanner.nextLine();
         switch (choice) {
             case 0:
@@ -192,6 +202,7 @@ public class AdminMainMenu implements Menu {
                 Response<Product> productResponse = productService.getProduct(productName);
                 if (!productResponse.isSuccessful()) {
                     System.out.println(productResponse.getMessage());
+
                     productMenu();
                 }
                 //noinspection InfiniteLoopStatement

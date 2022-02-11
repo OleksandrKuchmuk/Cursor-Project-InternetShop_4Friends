@@ -1,7 +1,9 @@
 package view.impl;
 
+
 import model.Order;
 import model.OrderStatus;
+import exception.MenuCorrectWater;
 import model.Product;
 import service.OrderService;
 import service.ProductService;
@@ -10,6 +12,12 @@ import view.Menu;
 
 import java.io.IOException;
 import java.util.*;
+import java.io.PrintStream;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Scanner;
+
 
 
 public class UserProductsMenu implements Menu {
@@ -38,6 +46,8 @@ public class UserProductsMenu implements Menu {
         while (true) {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
+
+//            int choice = MenuCorrectWater.menuCorrectWater(4); // перевірка ведення
             int choice = scanner.nextInt();
             switch (choice) {
                 case 0: exit();
@@ -215,6 +225,27 @@ public class UserProductsMenu implements Menu {
                     }
                 }
             }
+        }
+    }
+    public void listOfProduct() {
+        Response<Map<String, Product>> allProductsMapResponse = null;
+        try {
+            allProductsMapResponse = productService.getAllProducts();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        assert allProductsMapResponse != null;
+        if (!allProductsMapResponse.isSuccessful()) {
+            System.out.println(allProductsMapResponse.getMessage());
+        } else {
+            Map allProductsMap = allProductsMapResponse.getValue();
+            System.out.println("Product list:");
+            System.out.println("-".repeat(20));
+            Collection var10000 = allProductsMap.values();
+            PrintStream var10001 = System.out;
+            Objects.requireNonNull(var10001);
+            var10000.forEach(var10001::println);
+            System.out.println("-".repeat(50));
         }
     }
 
