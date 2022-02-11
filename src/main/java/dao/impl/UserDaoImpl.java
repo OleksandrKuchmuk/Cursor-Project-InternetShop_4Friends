@@ -14,6 +14,7 @@ public class UserDaoImpl implements UserDao {
     public UserDaoImpl() {
         this.userMap.put("admin", new User("admin", "masterpass", UserRole.ADMIN));
         this.userMap.put("user1", new User("user1", "12345678", UserRole.USER));
+        this.userMap.put("user3", new User("user3", "1_345678", UserRole.USER));
         User blockedUser = new User("user2", "12345678", UserRole.USER);
         blockedUser.block();
         this.userMap.put("user2", blockedUser);

@@ -1,6 +1,7 @@
 package view.impl;
 
 
+import exception.MenuCorrectWater;
 import model.User;
 import model.UserRole;
 import service.OrderService;
@@ -32,7 +33,9 @@ public class LoginMenu implements Menu {
             while (true) {
                 showItems(items);
                 System.out.print("\nPlease enter the number of the action point you want to perform: ");
-                int choice = scanner.nextInt();
+  //            int choice = scanner.nextInt();
+
+                int choice = MenuCorrectWater.menuCorrectWater(2); // перевырка ведення
                 switch (choice) {
                     case 0:
                         exit();
@@ -105,6 +108,7 @@ public class LoginMenu implements Menu {
     }
 
     public OrderService getOrderService() {
+
         return orderService;
     }
 }

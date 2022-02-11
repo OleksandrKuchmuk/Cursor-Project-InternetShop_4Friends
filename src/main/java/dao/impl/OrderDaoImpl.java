@@ -15,6 +15,7 @@ public class OrderDaoImpl implements OrderDao {
     private final Map<Integer, Order> orderMap;
 
     public OrderDaoImpl() {
+
         orderMap = new TreeMap<>();
     }
 
@@ -41,6 +42,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Optional<Order> delete(int id) {
+
         return Optional.ofNullable(orderMap.remove(id));
     }
 

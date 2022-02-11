@@ -1,6 +1,7 @@
 package view.impl;
 
 
+import exception.MenuCorrectWater;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -37,8 +38,8 @@ public class UserMainMenu implements Menu {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
-
+//            int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
             switch (choice) {
                 case 0 -> exit();
                 case 1 -> new UserProductsMenu(this, orderService, productService).show();
@@ -49,10 +50,12 @@ public class UserMainMenu implements Menu {
 
     @Override
     public void exit() {
+
         loginMenu.show();
     }
 
     User getCurrentUser(){
+
         return currentuser;
     }
 }

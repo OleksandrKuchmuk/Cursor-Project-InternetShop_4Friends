@@ -1,5 +1,6 @@
 package view.impl;
 
+import exception.MenuCorrectWater;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -39,7 +40,8 @@ public class AdminMainMenu implements Menu {
          scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
+   //         int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
 
             switch (choice) {
                 case 0:
@@ -64,8 +66,9 @@ public class AdminMainMenu implements Menu {
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
-        int choice =scanner.nextInt();
-        scanner.nextLine();
+        //int choice =scanner.nextInt();
+        int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
+        //scanner.nextLine();
             switch (choice) {
                 case 0:
                     show();
@@ -97,8 +100,8 @@ public class AdminMainMenu implements Menu {
         scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
-
+        //    int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
             switch (choice) {
                 case 0:
                     show();
@@ -122,8 +125,8 @@ public class AdminMainMenu implements Menu {
         scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
-
+        //    int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
             switch (choice) {
                 case 0:
                     show();
@@ -151,8 +154,8 @@ public class AdminMainMenu implements Menu {
         scanner = new Scanner(System.in);
 
         while (true) {
-            int choice = scanner.nextInt();
-
+      //      int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
             switch (choice) {
                 case 0:
                     productMenu();
