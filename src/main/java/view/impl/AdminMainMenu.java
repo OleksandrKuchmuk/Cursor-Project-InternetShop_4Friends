@@ -173,14 +173,7 @@ public class AdminMainMenu implements Menu {
     private void productMenu() {
         System.out.println("\nYou are in Admin menu: Product menu");
         System.out.println("-".repeat(50));
-        Collection<Product> productCollection = null;
-        try {
-            productCollection = productService.getAllProducts().getValue().values();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        Collection<Product> productCollection = productService.getAllProducts().getValue().values();
         productCollection.forEach(System.out::println);
         System.out.println("-".repeat(50));
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
@@ -258,12 +251,7 @@ public class AdminMainMenu implements Menu {
             scanner.nextLine();
             try {
                 Product newProduct = new Product(name, price, quantity);
-                Response<Product> productResponse = null;
-                try {
-                    productResponse = productService.addProduct(newProduct);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                Response<Product> productResponse = productService.addProduct(newProduct);
                 System.out.println(productResponse.getMessage());
                 productMenu();
             } catch (IllegalArgumentException e) {
@@ -286,8 +274,6 @@ public class AdminMainMenu implements Menu {
 
 
     @Override
-    public void exit() {
-        loginMenu.show();
-    }
+    public void exit() { loginMenu.show(); }
 }
 

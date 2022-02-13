@@ -8,9 +8,9 @@ import java.util.Map;
 public interface ProductService {
     Response<Product> getProduct(String name);
 
-    Response<Map<String, Product>> getAllProducts() throws IOException, ClassNotFoundException;
+    Response<Map<String, Product>> getAllProducts() ;
 
-    Response<Product> addProduct(Product product) throws IOException;
+    Response<Product> addProduct(Product product) ;
 
     Response<Product> deleteProduct(String name);
 
