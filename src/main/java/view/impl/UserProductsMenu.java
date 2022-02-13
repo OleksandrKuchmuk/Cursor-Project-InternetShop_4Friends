@@ -121,15 +121,15 @@ public class UserProductsMenu implements Menu {
                 .getId();
         while (true) {
             showProductList();
-//            System.out.println("Exit - 0");
+            System.out.println("Exit - 0");
             System.out.println("Enter product name: ");
             String productName = scanner.nextLine();
-//            try {
-//                int exit = Integer.parseInt(productName);
-//                if (exit == 0) {
-//                    show();
-//                }
-//            }catch (NumberFormatException e){};
+            try {
+                int exit = Integer.parseInt(productName);
+                if (exit == 0) {
+                    show();
+                }
+            }catch (NumberFormatException e){};
 
             Response<Product> productResponse = productService.getProduct(productName);
             if (!productResponse.isSuccessful()) {
