@@ -39,7 +39,11 @@ public class UserProductsMenu implements Menu {
         while (true) {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
+
+
+//            int choice = MenuCorrectWater.menuCorrectWater(4);
             int choice = scanner.nextInt();
+
             switch (choice) {
                 case 0: exit();
                 case 1: showProductList();
@@ -66,9 +70,27 @@ public class UserProductsMenu implements Menu {
 
     private void searchProduct(Scanner scanner) {
         List<Product> findProductList = new ArrayList<>();
-        System.out.print("Enter product name for search: ");
+
+        System.out.println("Exit - 0");
+        System.out.println("Enter product name for search:");
         String productName = scanner.nextLine();
-        Response<Map<String, Product>> allProductsResponse = productService.getAllProducts();
+
+        try {
+            int exit = Integer.parseInt(productName);
+            if (exit == 0) {
+                show();
+            }
+        }catch (NumberFormatException e){};
+
+        Response<Map<String, Product>> allProductsResponse = productService.getAllProducts();;
+//        try {
+//            allProductsResponse = productService.getAllProducts();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
         if (allProductsResponse.isSuccessful()) {
             Collection<Product> productCollection = allProductsResponse.getValue().values();
             for (Product product : productCollection) {
@@ -94,8 +116,18 @@ public class UserProductsMenu implements Menu {
                 .getId();
         while (true) {
             showProductList();
-            System.out.print("Enter product name: ");
+
+            System.out.println("Exit - 0");
+            System.out.println("Enter product name: ");
+
             String productName = scanner.nextLine();
+            try {
+                int exit = Integer.parseInt(productName);
+                if (exit == 0) {
+                    show();
+                }
+            }catch (NumberFormatException e){};
+
             Response<Product> productResponse = productService.getProduct(productName);
             if (!productResponse.isSuccessful()) {
                 System.out.println(productResponse.getMessage());
@@ -133,10 +165,13 @@ public class UserProductsMenu implements Menu {
         while (true) {
             System.out.println(order);
             showItems(checkoutItems);
-            int choice = scanner.nextInt();
+
+//            int choise = MenuCorrectWater.menuCorrectWater(3);
+            int choise = scanner.nextInt();
             scanner.nextLine();
-            switch (choice) {
-                case 0: show();
+            switch (choise){
+                case 0:show();
+
                 case 1: {
                     while (true) {
                         List<Product> productList = new ArrayList<>(order.getProductMap().keySet());
@@ -208,6 +243,7 @@ public class UserProductsMenu implements Menu {
 
     @Override
     public void exit() {
+
         userMainMenu.show();
     }
 }
