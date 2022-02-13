@@ -40,7 +40,7 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Optional<Product> getByName(String name) {
 
-        return Optional.empty();
+        return Optional.ofNullable(productMap.get(name));
     }
 
     @Override
