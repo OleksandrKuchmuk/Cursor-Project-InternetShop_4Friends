@@ -4,7 +4,7 @@ package view.impl;
 import model.Order;
 import model.OrderStatus;
 import model.Product;
-import exception.MenuCorrectWater;
+import exception.MenuNumberCorrectInputException;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -12,8 +12,6 @@ import service.Response;
 import service.UserService;
 import view.Menu;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
@@ -51,7 +49,7 @@ public class AdminMainMenu implements Menu {
 
         while (true) {
    //         int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3); // перевірка ведення
 
             switch (choice) {
                 case 0:
@@ -174,79 +172,77 @@ public class AdminMainMenu implements Menu {
         System.out.println("\nYou are in Admin menu: Product menu");
         System.out.println("-".repeat(50));
         Collection<Product> productCollection = productService.getAllProducts().getValue().values();
-//        try {
-//            productCollection = productService.getAllProducts().getValue().values();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         productCollection.forEach(System.out::println);
         System.out.println("-".repeat(50));
-        System.out.print("\nPlease enter the number of the action point you want to perform: ");
+        System.out.println("\nPlease enter the number of the action point you want to perform: ");
         showItems(itemsForProductMenu);
         scanner = new Scanner(System.in);
-
         int choice = scanner.nextInt();
-//        int choice = MenuCorrectWater.menuCorrectWater(3); // перевірка ведення
+//        int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3); // перевірка ведення
         scanner.nextLine();
         switch (choice) {
-            case 0:
-                show();
-            case 1: {
-                System.out.println("-".repeat(50));
-                productCollection.forEach(System.out::println);
-                System.out.println("-".repeat(50));
-                System.out.print("Enter product name for edit: ");
-                String productName = scanner.nextLine();
-                Response<Product> productResponse = productService.getProduct(productName);
-                if (!productResponse.isSuccessful()) {
-                    System.out.println(productResponse.getMessage());
-
-                    productMenu();
-                }
-                //noinspection InfiniteLoopStatement
-                while (true) {
-                    System.out.println("-".repeat(50));
-                    System.out.println(productResponse.getValue());
-                    System.out.println("-".repeat(50));
-                    showItems(itemsForEditProduct);
-                    int chosenItem = scanner.nextInt();
-                    scanner.nextLine();
-                    Response<Product> changeProductResponse;
-                    switch (chosenItem) {
-                        case 1: {
-                            System.out.print("Enter new product name: ");
-                            String newProductName = scanner.nextLine();
-                            changeProductResponse = productService.changeProductName(productName, newProductName);
-                            System.out.println(changeProductResponse.getMessage());
-                        }
-                        case 2: {
-                            System.out.print("Enter new product price: ");
-                            String newProductPrice = scanner.nextLine();
-                            changeProductResponse = productService.changeProductPrice(productName, Double.parseDouble(newProductPrice));
-                            System.out.println(changeProductResponse.getMessage());
-                        }
-                        case 3: {
-                            System.out.print("Enter new product quantity: ");
-                            int newProductQuantity = scanner.nextInt();
-                            scanner.nextLine();
-                            changeProductResponse = productService.changeProductQuantity(productName, newProductQuantity);
-                            System.out.println(changeProductResponse.getMessage());
-                        }
-                        case 0:
-                            productMenu();
-                    }
-                }
-            }
-            case 2: { editProduct(); }
+            case 0: show();
+            case 1: {editProduct(productCollection);}
+            case 2: { addNewProduct(); }
             case 3: { deleteProduct(productCollection); }
             default: productMenu();
         }
     }
 
 
-    private void editProduct() {
+    private void editProduct(Collection<Product> productCollection){
+        System.out.println("-".repeat(50));
+        productCollection.forEach(System.out::println);
+        System.out.println("-".repeat(50));
+        System.out.print("Enter product name for edit: ");
+        String productName = scanner.nextLine();
+        Response<Product> productResponse = productService.getProduct(productName);
+        if (!productResponse.isSuccessful()) {
+            System.out.println(productResponse.getMessage());
+            productMenu();
+        }
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            System.out.println("-".repeat(50));
+            System.out.println(productResponse.getValue());
+            System.out.println("-".repeat(50));
+            showItems(itemsForEditProduct);
+            int chosenItem = scanner.nextInt();
+            scanner.nextLine();
+            Response<Product> changeProductResponse;
+            switch (chosenItem) {
+                case 0:
+                    productMenu();
+                case 1: {
+                    System.out.print("Enter new product name: ");
+                    String newProductName = scanner.nextLine();
+                    changeProductResponse = productService.changeProductName(productName, newProductName);
+                    System.out.println(changeProductResponse.getMessage());
+                    break;
+                }
+                case 2: {
+                    System.out.print("Enter new product price: ");
+                    String newProductPrice = scanner.nextLine();
+                    changeProductResponse = productService.changeProductPrice(productName, Double.parseDouble(newProductPrice));
+                    System.out.println(changeProductResponse.getMessage());
+                break;
+                }
+                case 3: {
+                    System.out.print("Enter new product quantity: ");
+                    int newProductQuantity = scanner.nextInt();
+                    scanner.nextLine();
+                    changeProductResponse = productService.changeProductQuantity(productName, newProductQuantity);
+                    System.out.println(changeProductResponse.getMessage());
+                    break;
+                }
+
+            }
+        }
+
+    }
+
+
+    private void addNewProduct() {
 
         while (true) {
             System.out.print("Enter new product name: ");
@@ -259,11 +255,6 @@ public class AdminMainMenu implements Menu {
             try {
                 Product newProduct = new Product(name, price, quantity);
                 Response<Product> productResponse = productService.addProduct(newProduct);
-//                try {
-//                    productResponse = productService.addProduct(newProduct);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 System.out.println(productResponse.getMessage());
                 productMenu();
             } catch (IllegalArgumentException e) {

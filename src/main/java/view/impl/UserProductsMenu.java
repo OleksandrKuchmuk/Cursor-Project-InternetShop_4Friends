@@ -3,14 +3,13 @@ package view.impl;
 
 import model.Order;
 import model.OrderStatus;
-import exception.MenuCorrectWater;
+import exception.MenuNumberCorrectInputException;
 import model.Product;
 import service.OrderService;
 import service.ProductService;
 import service.Response;
 import view.Menu;
 
-import java.io.IOException;
 import java.util.*;
 import java.io.PrintStream;
 import java.util.Collection;
@@ -47,7 +46,7 @@ public class UserProductsMenu implements Menu {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
 
-            int choice = MenuCorrectWater.menuCorrectWater(4);
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(4);
 //            int choice = scanner.nextInt();
             switch (choice) {
                 case 0: exit();
@@ -168,7 +167,7 @@ public class UserProductsMenu implements Menu {
         while (true) {
             System.out.println(order);
             showItems(checkoutItems);
-            int choise = MenuCorrectWater.menuCorrectWater(3);
+            int choise = MenuNumberCorrectInputException.menuNumberCorrectInputException(3);
             //int choise = scanner.nextInt();
             //scanner.nextLine();
             switch (choise){

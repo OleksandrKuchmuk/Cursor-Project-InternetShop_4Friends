@@ -1,7 +1,7 @@
 package view.impl;
 
 
-import exception.MenuCorrectWater;
+import exception.MenuNumberCorrectInputException;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -39,7 +39,7 @@ public class UserMainMenu implements Menu {
 
         while (true) {
 //            int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(2); // перевірка ведення
             switch (choice) {
                 case 0 -> exit();
                 case 1 -> new UserProductsMenu(this, orderService, productService).show();

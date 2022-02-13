@@ -2,9 +2,9 @@ package exception;
 
 import java.util.Scanner;
 
-public class MenuCorrectWater {
+public class MenuNumberCorrectInputException {
 
-    public static int menuCorrectWater(int i) {
+    public static int menuNumberCorrectInputException(int i) {
 
         int choice = 0;
         boolean exit = true;
@@ -15,15 +15,12 @@ public class MenuCorrectWater {
                 if (choice >= 0 && choice <=i) {
                 exit = false;
                 } else {
-                    System.out.println("Incorrect water, Number not in between 0 - "+i);
+                    System.out.println("Incorrect input, number not in between 0 - "+i);
                 }
             } else {
-                System.out.println("Incorrect water, see the number from 0 -"+i);
+                System.out.println("Incorrect input, number not in between 0 - "+i);
             }
         }
         return choice;
-
-
     }
-
 }

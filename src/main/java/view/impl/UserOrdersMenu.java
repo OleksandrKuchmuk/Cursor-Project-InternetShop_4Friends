@@ -1,6 +1,6 @@
 package view.impl;
 
-import exception.MenuCorrectWater;
+import exception.MenuNumberCorrectInputException;
 import model.Order;
 import service.OrderService;
 import service.Response;
@@ -30,7 +30,7 @@ public class UserOrdersMenu implements Menu {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
    //         int choice = scanner.nextInt();
-            int choice = MenuCorrectWater.menuCorrectWater(1); // перевірка ведення
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(1); // перевірка ведення
             switch (choice) {
                 case 0:
                     exit();
