@@ -6,7 +6,6 @@ import service.OrderService;
 import service.Response;
 import view.Menu;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -30,8 +29,8 @@ public class UserOrdersMenu implements Menu {
         while (true) {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
-            int choice = scanner.nextInt();
-//            int choice = MenuCorrectWater.menuCorrectWater(1); // перевірка ведення
+   //         int choice = scanner.nextInt();
+            int choice = MenuCorrectWater.menuCorrectWater(1); // перевірка ведення
             switch (choice) {
                 case 0:
                     exit();
@@ -54,5 +53,7 @@ public class UserOrdersMenu implements Menu {
         }
 
     @Override
-    public void exit() {userMainMenu.show();}
+    public void exit() {
+        userMainMenu.show();
+    }
 }

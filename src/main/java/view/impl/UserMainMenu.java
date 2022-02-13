@@ -7,7 +7,6 @@ import service.OrderService;
 import service.ProductService;
 import view.Menu;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class UserMainMenu implements Menu {
@@ -50,7 +49,7 @@ public class UserMainMenu implements Menu {
     }
 
     @Override
-    public void exit()  {
+    public void exit() {
 
         loginMenu.show();
     }

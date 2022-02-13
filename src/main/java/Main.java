@@ -3,16 +3,12 @@ import service.impl.ProductServiceImpl;
 import service.impl.UserServiceImpl;
 import view.impl.LoginMenu;
 
-import java.io.IOException;
-
 public class Main {
     public static void main(String[] args) {
 //        new LoginMenu(new UserServiceImpl()).show();
 
 //        new LoginMenu().show();
-
-            new LoginMenu(new OrderServiceImpl(), new UserServiceImpl(), new ProductServiceImpl()).show();
-
+        new LoginMenu(new OrderServiceImpl(), new UserServiceImpl(), new ProductServiceImpl()).show();
 
 
 //        productDaoImpl.addFileWithProducts();

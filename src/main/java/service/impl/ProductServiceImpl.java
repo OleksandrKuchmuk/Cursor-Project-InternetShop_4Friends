@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Response<Map<String, Product>> getAllProducts()  {
+    public Response<Map<String, Product>> getAllProducts() {
         Map<String, Product> productMap = productDao.getAllProducts();
         if (productMap.isEmpty()) {
             return new Response<>(null, false, "Product database is empty.");
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Response<Product> addProduct(Product product) {
+    public Response<Product> addProduct(Product product)  {
         Optional<Product> productByName = productDao.getByName(product.getName());
         if (productByName.isPresent()) {
             return new Response<>(productByName.get(), false,

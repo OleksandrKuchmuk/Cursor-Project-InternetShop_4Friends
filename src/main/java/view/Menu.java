@@ -1,11 +1,9 @@
 package view;
 
-import java.io.IOException;
-
 public interface Menu {
-    void show() throws IOException, ClassNotFoundException;
+    void show();
 
-    void exit() throws IOException, ClassNotFoundException;
+    void exit();
 
     default void showItems(String[] items) {
         System.out.println("-------------");

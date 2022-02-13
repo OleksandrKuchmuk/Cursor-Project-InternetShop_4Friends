@@ -9,10 +9,10 @@ import java.util.Optional;
 import java.util.TreeMap;
 
 public class ProductDaoImpl implements ProductDao {
-    private final Map<String, Product> productMap;
+    private final Map<String, Product> productMap=new TreeMap<>();
 
     public ProductDaoImpl() {
-        this.productMap = new TreeMap<>();
+
         add(new Product("Aster", 10.00, 2500));
         add(new Product("Begonia", 80.00, 1250));
         add(new Product("Buttercup", 90.0, 3500));
@@ -33,18 +33,18 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public Optional<Product> add(Product product) {                                 //+
+    public Optional<Product> add(Product product) {
         return Optional.ofNullable(productMap.put(product.getName(), product));
     }
 
     @Override
-    public Optional<Product> getByName(String name) {                                //+
+    public Optional<Product> getByName(String name) {
 
-        return Optional.ofNullable(productMap.get(name));
+        return Optional.empty();
     }
 
     @Override
-    public Optional<Product> delete(String name) {                                  //+
+    public Optional<Product> delete(String name) {
 
         return Optional.ofNullable(productMap.remove(name));
     }
@@ -52,15 +52,28 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public Map<String, Product> getAllProducts()  {
         return new TreeMap<>(productMap);
-    }     //+
-
+    }
 
     @Override
-    public Optional<Product> update(String name, Product newProduct) {             //+
+    public Optional<Product> getListName(String name) {
+
+        return Optional.ofNullable(productMap.get(name));
+    }
+
+    @Override
+    public Optional<Product> update(String name, Product newProduct) {
         Optional<Product> deleteProduct = delete(name);
         if (deleteProduct.isPresent()) {
             add(newProduct);
         }
         return deleteProduct;
     }
+
+    @Override
+    public Optional<Product> getListProducts(String name, double price) {
+
+        return Optional.empty();
+    }
+
+
 }

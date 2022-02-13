@@ -10,7 +10,6 @@ import service.Response;
 import service.UserService;
 import view.Menu;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 public class LoginMenu implements Menu {
@@ -19,19 +18,19 @@ public class LoginMenu implements Menu {
     private OrderService orderService;
     private UserService userService;
     private ProductService productService;
-private boolean isRuning = true;
+
     public LoginMenu(OrderService orderService, UserService userService, ProductService productService) {
         this.orderService = orderService;
         this.userService = userService;
         this.productService = productService;
     }
 
-    public void show()  {
+    public void show() {
         System.out.println("\nYou are in Main menu");
 
         Scanner scanner = new Scanner(System.in);
 
-            while (isRuning) {
+            while (true) {
                 showItems(items);
                 System.out.print("\nPlease enter the number of the action point you want to perform: ");
   //            int choice = scanner.nextInt();
@@ -54,10 +53,10 @@ private boolean isRuning = true;
     }
 
     public void exit() {
-        isRuning = false;
+        System.exit(0);
     }
 
-    private void loginSubMenu()  {
+    private void loginSubMenu() {
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input login: ");
@@ -79,7 +78,7 @@ private boolean isRuning = true;
 
     }
 
-    private void registerSubMenu(){
+    private void registerSubMenu() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input login: ");
         String login = scanner.nextLine();
