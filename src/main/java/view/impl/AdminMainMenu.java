@@ -22,7 +22,7 @@ public class AdminMainMenu implements Menu {
     private final String[] itemsForOrderMenu = {"1.Change orders status", "0.Back"};
     private final String[] itemsForProductMenu = {"1.Edit product", "2.Add product", "3.Delete product", "0.Back"};
     private final String[] itemsOrderStatus = {"1.Confirm", "2.Un confirm"};
-    private final String[] itemsForEditProduct = {"1.Edit name", "2.Edit price", "3.Edit quantity", "0.Back"};
+    private final String[] itemsForEditProduct = {"1.Edit price", "2.Edit quantity", "0.Back"};
 
     private final LoginMenu loginMenu;
     private final UserService userService;
@@ -213,21 +213,21 @@ public class AdminMainMenu implements Menu {
             switch (chosenItem) {
                 case 0:
                     productMenu();
+//                case 1: {
+//                    System.out.print("Enter new product name: ");
+//                    String newProductName = scanner.nextLine();
+//                    changeProductResponse = productService.changeProductName(productName, newProductName);
+//                    System.out.println(changeProductResponse.getMessage());
+//                    break;
+//                }
                 case 1: {
-                    System.out.print("Enter new product name: ");
-                    String newProductName = scanner.nextLine();
-                    changeProductResponse = productService.changeProductName(productName, newProductName);
-                    System.out.println(changeProductResponse.getMessage());
-                    break;
-                }
-                case 2: {
                     System.out.print("Enter new product price: ");
                     String newProductPrice = scanner.nextLine();
                     changeProductResponse = productService.changeProductPrice(productName, Double.parseDouble(newProductPrice));
                     System.out.println(changeProductResponse.getMessage());
                 break;
                 }
-                case 3: {
+                case 2: {
                     System.out.print("Enter new product quantity: ");
                     int newProductQuantity = scanner.nextInt();
                     scanner.nextLine();
