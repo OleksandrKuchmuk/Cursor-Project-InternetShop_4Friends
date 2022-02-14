@@ -1,5 +1,6 @@
 # Internet flowers Shop "4Friends"
-![1546766018](https://user-images.githubusercontent.com/96177236/152158313-d7952337-cb72-4694-a1d7-e5aac18b395c.jpg)
+![Flowers](https://user-images.githubusercontent.com/96177236/153852520-9b7f27d0-8a4b-49fd-9bb8-1fe4f04a3edf.jpg)
+
 
 # Users for testing:
 
