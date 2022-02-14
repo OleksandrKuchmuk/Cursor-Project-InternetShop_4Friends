@@ -25,7 +25,6 @@ public class Product {
     }
 
     public double getPrice() {
-
         return price;
     }
 
@@ -57,14 +56,12 @@ public class Product {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(name);
     }
 
     @Override
     public String toString() {
-
-        return name + " | " + price + " | " + quantity;
+        return name + " | " + "Price: " + price + "$" + " | " + "Quantity: " + quantity;
     }
 }
 

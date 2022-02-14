@@ -10,16 +10,12 @@ import service.ProductService;
 import service.Response;
 import view.Menu;
 
-import java.io.PrintStream;
 import java.util.*;
-
 
 public class UserProductsMenu implements Menu {
 
-
     private final String[] items = {"1. Show product list", "2. Search product", "3. Add products to order ", "4. Confirm order", "0. Back previous menu"};
     private final String[] checkoutItems = {"1.Remove product", "2.Change product count", "3.Confirm order", "0.Back"};
-
     private final UserMainMenu userMainMenu;
     private final OrderService orderService;
     private final ProductService productService;
@@ -32,7 +28,6 @@ public class UserProductsMenu implements Menu {
         this.productService = productService;
     }
 
-
     @Override
     public void show() {
         System.out.println("\nYou are in Product menu");
@@ -40,12 +35,10 @@ public class UserProductsMenu implements Menu {
         while (true) {
             showItems(items);
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
-
             int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(4);
-
             switch (choice) {
                 case 0:
-                    exit();
+                    userMainMenu.show();
                 case 1:
                     showProductList();
                     break;
@@ -54,7 +47,6 @@ public class UserProductsMenu implements Menu {
                     break;
                 case 3:
                     addProductToOrder(scanner);
-//                break;
                 case 4:
                     orderCheckout(scanner);
             }
@@ -63,13 +55,6 @@ public class UserProductsMenu implements Menu {
 
     private void showProductList() {
         Response<Map<String, Product>> allProductsMapResponse = productService.getAllProducts();
-//        try {
-//            allProductsMapResponse = productService.getAllProducts();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
         if (!allProductsMapResponse.isSuccessful()) {
             System.out.println(allProductsMapResponse.getMessage());
             return;
@@ -86,7 +71,6 @@ public class UserProductsMenu implements Menu {
         System.out.println("Exit - 0");
         System.out.println("Enter product name for search:");
         String productName = scanner.nextLine();
-
         try {
             int exit = Integer.parseInt(productName);
             if (exit == 0) {
@@ -94,7 +78,6 @@ public class UserProductsMenu implements Menu {
             }
         } catch (NumberFormatException e) {
         }
-        ;
 
         Response<Map<String, Product>> allProductsResponse = productService.getAllProducts();
         if (allProductsResponse.isSuccessful()) {
@@ -133,8 +116,6 @@ public class UserProductsMenu implements Menu {
                 }
             } catch (NumberFormatException e) {
             }
-            ;
-
             Response<Product> productResponse = productService.getProduct(productName);
             if (!productResponse.isSuccessful()) {
                 System.out.println(productResponse.getMessage());
@@ -171,8 +152,8 @@ public class UserProductsMenu implements Menu {
         while (true) {
             System.out.println(order);
             showItems(checkoutItems);
-            int choise = MenuNumberCorrectInputException.menuNumberCorrectInputException(3);
-            switch (choise) {
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3);
+            switch (choice) {
                 case 0:
                     show();
                 case 1: {
@@ -243,33 +224,5 @@ public class UserProductsMenu implements Menu {
                 }
             }
         }
-    }
-
-    public void listOfProduct() {
-        Response<Map<String, Product>> allProductsMapResponse = productService.getAllProducts();
-//        try {
-//            allProductsMapResponse = productService.getAllProducts();
-//        } catch (IOException | ClassNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        assert allProductsMapResponse != null;
-        if (!allProductsMapResponse.isSuccessful()) {
-            System.out.println(allProductsMapResponse.getMessage());
-        } else {
-            Map allProductsMap = allProductsMapResponse.getValue();
-            System.out.println("Product list:");
-            System.out.println("-".repeat(20));
-            Collection var10000 = allProductsMap.values();
-            PrintStream var10001 = System.out;
-            Objects.requireNonNull(var10001);
-            var10000.forEach(var10001::println);
-            System.out.println("-".repeat(50));
-        }
-    }
-
-    @Override
-    public void exit() {
-
-        userMainMenu.show();
     }
 }

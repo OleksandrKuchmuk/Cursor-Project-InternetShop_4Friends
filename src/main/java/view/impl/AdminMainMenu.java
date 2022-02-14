@@ -1,10 +1,9 @@
 package view.impl;
 
-
+import exception.MenuNumberCorrectInputException;
 import model.Order;
 import model.OrderStatus;
 import model.Product;
-import exception.MenuNumberCorrectInputException;
 import model.User;
 import service.OrderService;
 import service.ProductService;
@@ -23,7 +22,6 @@ public class AdminMainMenu implements Menu {
     private final String[] itemsForProductMenu = {"1.Edit product", "2.Add product", "3.Delete product", "0.Back"};
     private final String[] itemsOrderStatus = {"1.Confirm", "2.Un confirm"};
     private final String[] itemsForEditProduct = {"1.Edit price", "2.Edit quantity", "0.Back"};
-
     private final LoginMenu loginMenu;
     private final UserService userService;
     private final OrderService orderService;
@@ -46,14 +44,12 @@ public class AdminMainMenu implements Menu {
         showItems(items);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
         scanner = new Scanner(System.in);
-
         while (true) {
-   //         int choice = scanner.nextInt();
             int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3); // перевірка ведення
-
             switch (choice) {
                 case 0:
-                    exit();
+                    loginMenu.show();
+                    ;
                     break;
                 case 1:
                     usersMenu();
@@ -72,11 +68,7 @@ public class AdminMainMenu implements Menu {
         System.out.println("\nYou are in Admin menu: Users menu");
         showItems(itemsForUserMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
-        scanner = new Scanner(System.in);
-
-        int choice = scanner.nextInt();
-//        int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
-        scanner.nextLine();
+        int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(2); // checking to correct input
         switch (choice) {
             case 0:
                 show();
@@ -87,7 +79,6 @@ public class AdminMainMenu implements Menu {
                 System.out.println(userResponse.getMessage());
                 usersMenu();
                 break;
-
             }
             case 2: {
                 System.out.print("Enter username for un blocking user: ");
@@ -95,24 +86,17 @@ public class AdminMainMenu implements Menu {
                 System.out.println(userResponse.getMessage());
                 usersMenu();
                 break;
-
             }
             default:
                 usersMenu();
         }
-
     }
 
     private void ordersMenu() {
         System.out.println("\nYou are in Admin menu: Orders menu");
         showItems(itemsForOrderMenu);
         System.out.print("\nPlease enter the number of the action point you want to perform: ");
-        scanner = new Scanner(System.in);
-
-
-        int choice = scanner.nextInt();
-//            int choice = MenuCorrectWater.menuCorrectWater(2); // перевірка ведення
-        scanner.nextLine();
+        int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(2); // checking to correct input
         switch (choice) {
             case 1: {
                 while (true) {
@@ -156,7 +140,6 @@ public class AdminMainMenu implements Menu {
                             break;
                         }
                     }
-
                     break;
                 }
                 ordersMenu();
@@ -176,21 +159,26 @@ public class AdminMainMenu implements Menu {
         System.out.println("-".repeat(50));
         System.out.println("\nPlease enter the number of the action point you want to perform: ");
         showItems(itemsForProductMenu);
-        scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-//        int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3); // перевірка ведення
-        scanner.nextLine();
+        int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(3); // checking to correct input
         switch (choice) {
-            case 0: show();
-            case 1: {editProduct(productCollection);}
-            case 2: { addNewProduct(); }
-            case 3: { deleteProduct(productCollection); }
-            default: productMenu();
+            case 0:
+                show();
+            case 1: {
+                editProduct(productCollection);
+            }
+            case 2: {
+                addNewProduct();
+            }
+            case 3: {
+                deleteProduct(productCollection);
+            }
+            default:
+                productMenu();
         }
     }
 
 
-    private void editProduct(Collection<Product> productCollection){
+    private void editProduct(Collection<Product> productCollection) {
         System.out.println("-".repeat(50));
         productCollection.forEach(System.out::println);
         System.out.println("-".repeat(50));
@@ -201,7 +189,6 @@ public class AdminMainMenu implements Menu {
             System.out.println(productResponse.getMessage());
             productMenu();
         }
-        //noinspection InfiniteLoopStatement
         while (true) {
             System.out.println("-".repeat(50));
             System.out.println(productResponse.getValue());
@@ -213,19 +200,12 @@ public class AdminMainMenu implements Menu {
             switch (chosenItem) {
                 case 0:
                     productMenu();
-//                case 1: {
-//                    System.out.print("Enter new product name: ");
-//                    String newProductName = scanner.nextLine();
-//                    changeProductResponse = productService.changeProductName(productName, newProductName);
-//                    System.out.println(changeProductResponse.getMessage());
-//                    break;
-//                }
                 case 1: {
                     System.out.print("Enter new product price: ");
                     String newProductPrice = scanner.nextLine();
                     changeProductResponse = productService.changeProductPrice(productName, Double.parseDouble(newProductPrice));
                     System.out.println(changeProductResponse.getMessage());
-                break;
+                    break;
                 }
                 case 2: {
                     System.out.print("Enter new product quantity: ");
@@ -235,15 +215,11 @@ public class AdminMainMenu implements Menu {
                     System.out.println(changeProductResponse.getMessage());
                     break;
                 }
-
             }
         }
-
     }
 
-
     private void addNewProduct() {
-
         while (true) {
             System.out.print("Enter new product name: ");
             String name = scanner.nextLine();
@@ -273,12 +249,6 @@ public class AdminMainMenu implements Menu {
             System.out.println(productDeleteResponse.getMessage());
             productMenu();
         }
-    }
-
-
-    @Override
-    public void exit() {
-        loginMenu.show();
     }
 }
 

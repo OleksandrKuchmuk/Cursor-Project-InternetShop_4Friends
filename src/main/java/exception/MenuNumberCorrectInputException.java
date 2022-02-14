@@ -12,13 +12,13 @@ public class MenuNumberCorrectInputException {
             Scanner scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
                 choice = scanner.nextInt();
-                if (choice >= 0 && choice <=i) {
-                exit = false;
+                if (choice >= 0 && choice <= i) {
+                    exit = false;
                 } else {
-                    System.out.println("Incorrect input, number not in between 0 - "+i);
+                    System.out.println("Incorrect input, number not between 0 - " + i);
                 }
             } else {
-                System.out.println("Incorrect input, number not in between 0 - "+i);
+                System.out.println("Incorrect input, number not between 0 - " + i);
             }
         }
         return choice;

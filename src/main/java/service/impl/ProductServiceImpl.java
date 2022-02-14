@@ -60,25 +60,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Response<Product> changeProductName(String name, String newName) {
-        name = name.strip();
-        Optional<Product> productOptional = productDao.getByName(name);
-        if (productOptional.isPresent()) {
-            Product productToChange = productOptional.get();
-            try {
-                productToChange.setName(newName);
-            } catch (IllegalArgumentException exception) {
-                return new Response<>(null, false, exception.getMessage());
-            }
-            productDao.update(name, productToChange);
-            return new Response<>(productToChange, true,
-                    "Product '" + name + "' successfully updated");
-        }
-        return new Response<>(null, false,
-                "Product '" + name + "' does not exist");
-    }
-
-    @Override
     public Response<Product> changeProductQuantity(String name, int quantity) {
         name = name.strip();
         Optional<Product> productOptional = productDao.getByName(name);

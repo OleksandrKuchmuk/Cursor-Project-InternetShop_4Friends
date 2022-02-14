@@ -1,6 +1,5 @@
 package view.impl;
 
-
 import exception.MenuNumberCorrectInputException;
 import model.User;
 import model.UserRole;
@@ -15,9 +14,9 @@ import java.util.Scanner;
 public class LoginMenu implements Menu {
 
     private final String[] items = new String[]{"1.Login", "2.Register", "0.Exit"};
-    private OrderService orderService;
-    private UserService userService;
-    private ProductService productService;
+    private final OrderService orderService;
+    private final UserService userService;
+    private final ProductService productService;
 
     public LoginMenu(OrderService orderService, UserService userService, ProductService productService) {
         this.orderService = orderService;
@@ -27,37 +26,28 @@ public class LoginMenu implements Menu {
 
     public void show() {
         System.out.println("\nYou are in Main menu");
-
-        Scanner scanner = new Scanner(System.in);
-
-            while (true) {
-                showItems(items);
-                System.out.print("\nPlease enter the number of the action point you want to perform: ");
-  //            int choice = scanner.nextInt();
-
-                int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(2); // перевырка ведення
-                switch (choice) {
-                    case 0:
-                        exit();
-                    case 1:
-                        loginSubMenu();
-                    case 2:
-                        registerSubMenu();
-                        break;
-                    default:
-                        System.out.println(choice + " does not exist");
-                        showItems(items);
-                }
+        while (true) {
+            showItems(items);
+            System.out.print("\nPlease enter the number of the action point you want to perform: ");
+            int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(2); // checking to correct input
+            switch (choice) {
+                case 0:
+                    System.exit(0);
+                    break;
+                case 1:
+                    loginSubMenu();
+                    break;
+                case 2:
+                    registerSubMenu();
+                    break;
+                default:
+                    System.out.println(choice + " does not exist");
+                    showItems(items);
             }
-
-    }
-
-    public void exit() {
-        System.exit(0);
+        }
     }
 
     private void loginSubMenu() {
-
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input login: ");
         String login = scanner.nextLine();
@@ -75,7 +65,6 @@ public class LoginMenu implements Menu {
             System.out.println(userResponse.getMessage());
             show();
         }
-
     }
 
     private void registerSubMenu() {
@@ -98,17 +87,5 @@ public class LoginMenu implements Menu {
                 registerSubMenu();
             }
         }
-
-    }
-
-
-
-    public ProductService getProductService() {
-        return productService;
-    }
-
-    public OrderService getOrderService() {
-
-        return orderService;
     }
 }

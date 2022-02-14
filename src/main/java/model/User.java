@@ -19,22 +19,18 @@ public class User {
     }
 
     public String getUserName() {
-
         return userName;
     }
 
     public String getPassword() {
-
         return password;
     }
 
     public boolean isBlocked() {
-
         return this.isBlocked;
     }
 
     public UserRole getUserRole() {
-
         return this.userRole;
     }
 
@@ -96,6 +92,3 @@ public class User {
                 '}';
     }
 }
-
-
-

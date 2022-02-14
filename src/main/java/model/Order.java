@@ -23,17 +23,14 @@ public class Order {
     }
 
     public int getId() {
-
         return id;
     }
 
     public User getUser() {
-
         return user;
     }
 
     public Map<Product, Integer> getProductMap() {
-
         return new HashMap<>(productMap);
     }
 
@@ -48,17 +45,14 @@ public class Order {
     }
 
     public double getTotalPrice() {
-
         return totalPrice;
     }
 
     public OrderStatus getOrderStatus() {
-
         return orderStatus;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
-
         this.orderStatus = orderStatus;
     }
 

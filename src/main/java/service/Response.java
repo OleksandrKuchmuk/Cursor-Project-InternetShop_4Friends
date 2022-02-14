@@ -12,24 +12,15 @@ public class Response<T> {
         this.message = message;
     }
 
-    public T getValue() {
-
-        return this.value;
-    }
-
-
+    public T getValue() { return this.value; }
 
     public String getMessage() {
         return this.message;
     }
 
-
-
     public boolean isSuccessful() {
         return isSuccessful;
     }
-
-
 
     @Override
     public String toString() {
