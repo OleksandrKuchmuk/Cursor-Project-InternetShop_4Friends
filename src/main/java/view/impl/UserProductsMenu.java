@@ -1,22 +1,17 @@
 package view.impl;
 
 
+import exception.MenuNumberCorrectInputException;
 import model.Order;
 import model.OrderStatus;
-import exception.MenuNumberCorrectInputException;
 import model.Product;
 import service.OrderService;
 import service.ProductService;
 import service.Response;
 import view.Menu;
 
-import java.util.*;
 import java.io.PrintStream;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Scanner;
-
+import java.util.*;
 
 
 public class UserProductsMenu implements Menu {
@@ -47,21 +42,26 @@ public class UserProductsMenu implements Menu {
             System.out.print("\nPlease enter the number of the action point you want to perform: ");
 
             int choice = MenuNumberCorrectInputException.menuNumberCorrectInputException(4);
-//            int choice = scanner.nextInt();
+
             switch (choice) {
-                case 0: exit();
-                case 1: showProductList();
-                break;
-                case 2: searchProduct(scanner);
-                break;
-                case 3: addProductToOrder(scanner);
+                case 0:
+                    exit();
+                case 1:
+                    showProductList();
+                    break;
+                case 2:
+                    searchProduct(scanner);
+                    break;
+                case 3:
+                    addProductToOrder(scanner);
 //                break;
-                case 4: orderCheckout(scanner);
+                case 4:
+                    orderCheckout(scanner);
             }
         }
     }
 
-    private void showProductList(){
+    private void showProductList() {
         Response<Map<String, Product>> allProductsMapResponse = productService.getAllProducts();
 //        try {
 //            allProductsMapResponse = productService.getAllProducts();
@@ -70,7 +70,7 @@ public class UserProductsMenu implements Menu {
 //        } catch (ClassNotFoundException e) {
 //            e.printStackTrace();
 //        }
-        if (!allProductsMapResponse.isSuccessful()){
+        if (!allProductsMapResponse.isSuccessful()) {
             System.out.println(allProductsMapResponse.getMessage());
             return;
         }
@@ -92,7 +92,9 @@ public class UserProductsMenu implements Menu {
             if (exit == 0) {
                 show();
             }
-        }catch (NumberFormatException e){};
+        } catch (NumberFormatException e) {
+        }
+        ;
 
         Response<Map<String, Product>> allProductsResponse = productService.getAllProducts();
         if (allProductsResponse.isSuccessful()) {
@@ -103,7 +105,7 @@ public class UserProductsMenu implements Menu {
                 }
             }
         }
-        if (findProductList.isEmpty()){
+        if (findProductList.isEmpty()) {
             System.out.println("Product does not exist");
             System.out.println("In our shop you can buy only flowers");
         } else {
@@ -111,7 +113,7 @@ public class UserProductsMenu implements Menu {
         }
     }
 
-    private void addProductToOrder(Scanner scanner){
+    private void addProductToOrder(Scanner scanner) {
         Response<Map<Integer, Order>> ordersByUserResponse = orderService.getOrdersByUser(userMainMenu.getCurrentUser());
         Collection<Order> orderCollection = ordersByUserResponse.getValue().values();
         int orderId = orderCollection.stream()
@@ -129,7 +131,9 @@ public class UserProductsMenu implements Menu {
                 if (exit == 0) {
                     show();
                 }
-            }catch (NumberFormatException e){};
+            } catch (NumberFormatException e) {
+            }
+            ;
 
             Response<Product> productResponse = productService.getProduct(productName);
             if (!productResponse.isSuccessful()) {
@@ -149,7 +153,7 @@ public class UserProductsMenu implements Menu {
         }
     }
 
-    private void orderCheckout(Scanner scanner){
+    private void orderCheckout(Scanner scanner) {
         Response<Map<Integer, Order>> orderByUsersResponse = orderService.getOrdersByUser(userMainMenu.getCurrentUser());
         Collection<Order> orderCollection = orderByUsersResponse.getValue().values();
         Optional<Order> inProgressOptional = orderCollection.stream()
@@ -168,15 +172,14 @@ public class UserProductsMenu implements Menu {
             System.out.println(order);
             showItems(checkoutItems);
             int choise = MenuNumberCorrectInputException.menuNumberCorrectInputException(3);
-            //int choise = scanner.nextInt();
-            //scanner.nextLine();
-            switch (choise){
-                case 0:show();
+            switch (choise) {
+                case 0:
+                    show();
                 case 1: {
                     while (true) {
                         List<Product> productList = new ArrayList<>(order.getProductMap().keySet());
-                        for (int i=0; i < productList.size(); i++){
-                            System.out.println((i+1) + "." + productList.get(i));
+                        for (int i = 0; i < productList.size(); i++) {
+                            System.out.println((i + 1) + "." + productList.get(i));
                         }
                         System.out.println("Choose product number to remove: ");
                         int productNumber = scanner.nextInt();
@@ -190,20 +193,20 @@ public class UserProductsMenu implements Menu {
                         }
                         Response<Order> orderResponse = orderService.removeProductFormOrder(order.getId(), productToRemove);
                         System.out.println(orderResponse.getMessage());
-                        if (orderResponse.isSuccessful()){
+                        if (orderResponse.isSuccessful()) {
                             order = orderResponse.getValue();
                         }
                         break;
                     }
                 }
 
-                case 2:{
-                    while (true){
+                case 2: {
+                    while (true) {
                         Map<Product, Integer> productMap = order.getProductMap();
                         List<Product> productList = new ArrayList<>(productMap.keySet());
                         int counter = 0;
                         for (Map.Entry<Product, Integer> productCountEntry : productMap.entrySet()) {
-                            System.out.println(++counter + "."+ productCountEntry.getKey() +
+                            System.out.println(++counter + "." + productCountEntry.getKey() +
                                     " - " + productCountEntry.getValue());
                         }
                         System.out.println("Choose product number for change count: ");
@@ -212,7 +215,7 @@ public class UserProductsMenu implements Menu {
                         Product productToChangeCount;
                         try {
                             productToChangeCount = productList.get(productNumber - 1);
-                        }catch (IndexOutOfBoundsException exception) {
+                        } catch (IndexOutOfBoundsException exception) {
                             System.out.println("Incorrect product Number");
                             continue;
                         }
@@ -241,8 +244,9 @@ public class UserProductsMenu implements Menu {
             }
         }
     }
+
     public void listOfProduct() {
-        Response<Map<String, Product>> allProductsMapResponse =  productService.getAllProducts();
+        Response<Map<String, Product>> allProductsMapResponse = productService.getAllProducts();
 //        try {
 //            allProductsMapResponse = productService.getAllProducts();
 //        } catch (IOException | ClassNotFoundException e) {
@@ -265,6 +269,7 @@ public class UserProductsMenu implements Menu {
 
     @Override
     public void exit() {
+
         userMainMenu.show();
     }
 }
