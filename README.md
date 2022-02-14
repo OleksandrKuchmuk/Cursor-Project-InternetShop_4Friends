@@ -8,5 +8,5 @@ Password: masterpass
 Login: user1   
 Password: 12345678
 
-Login: user2  \\user is blocked   
+Login: user2      \\user is blocked   
 Password: 12345678
